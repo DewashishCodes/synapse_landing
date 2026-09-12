@@ -1,0 +1,509 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-display: "Pixelify Sans", sans-serif;
+  --font-pixel: "Pixelify Sans", sans-serif;
+  --font-hud: "Silkscreen", monospace;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-sun: var(--accent-sun);
+  --color-accent-sky: var(--accent-sky);
+  --color-accent-grape: var(--accent-grape);
+
+  --radius-sm: 0px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
+  --radius-4xl: 20px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+}
+
+:root {
+  --radius: 6px;
+  /* Deep cinematic Minecraft / Voxel night */
+  --background: oklch(0.12 0.03 260);
+  --foreground: oklch(0.97 0.01 90);
+  --card: oklch(0.16 0.02 260 / 92%);
+  --card-foreground: oklch(0.97 0.01 90);
+  --popover: oklch(0.16 0.02 260);
+  --popover-foreground: oklch(0.97 0.01 90);
+  --primary: oklch(0.85 0.18 200); /* Diamond Cyan */
+  --primary-foreground: oklch(0.1 0.03 240);
+  --secondary: oklch(0.22 0.02 260);
+  --secondary-foreground: oklch(0.97 0.01 90);
+  --muted: oklch(0.2 0.02 260);
+  --muted-foreground: oklch(0.72 0.03 250);
+  --accent: oklch(0.82 0.22 145); /* Emerald Green */
+  --accent-foreground: oklch(0.12 0.04 145);
+  --accent-lime: oklch(0.82 0.22 145); /* Emerald Green */
+  --accent-sun: oklch(0.88 0.19 85); /* Gold Ore */
+  --accent-sky: oklch(0.85 0.18 200); /* Diamond Cyan */
+  --accent-grape: oklch(0.68 0.24 25); /* Redstone Red */
+  --destructive: oklch(0.63 0.24 27);
+  --destructive-foreground: oklch(0.98 0.01 90);
+  --border: oklch(0.35 0.03 260 / 50%);
+  --input: oklch(0.3 0.02 260 / 60%);
+  --ring: oklch(0.85 0.18 200);
+  --gradient-candy: linear-gradient(
+    135deg,
+    oklch(0.85 0.18 200),
+    oklch(0.82 0.22 145) 50%,
+    oklch(0.88 0.19 85)
+  );
+  --shadow-pop:
+    0 12px 0 -4px oklch(0.08 0.02 260 / 80%),
+    0 24px 60px -15px oklch(0.05 0.02 260 / 95%);
+  --glass: oklch(0.16 0.02 260 / 90%);
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .panel {
+    border-radius: var(--radius-lg);
+    border: 2px solid oklch(0.28 0.03 260);
+    background: oklch(0.14 0.02 260 / 92%);
+    backdrop-filter: blur(16px);
+    padding: 1.85rem;
+    box-shadow:
+      inset 2px 2px 0 oklch(0.36 0.03 260 / 60%),
+      inset -2px -2px 0 oklch(0.08 0.01 260 / 90%),
+      0 16px 40px -10px oklch(0.04 0.01 260 / 95%);
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: var(--font-pixel);
+    font-weight: 700;
+    font-size: clamp(3.2rem, 11vw, 7.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, #ffffff 0%, #a8d5ff 40%, #00e5ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 6px 0 oklch(0.08 0.02 260)) drop-shadow(0 14px 28px rgba(0, 229, 255, 0.45));
+  }
+
+  .hero-sub {
+    font-family: var(--font-hud);
+    font-size: 0.38em;
+    letter-spacing: 0.22em;
+    color: var(--accent-lime);
+    -webkit-text-fill-color: var(--accent-lime);
+    text-shadow: 0 0 12px rgba(80, 250, 123, 0.6);
+  }
+
+  .hero-copy {
+    font-family: var(--font-sans);
+    text-shadow:
+      0 2px 14px oklch(0.08 0.02 260 / 98%),
+      0 1px 3px oklch(0.08 0.02 260 / 95%);
+  }
+
+  .section-title {
+    font-family: var(--font-pixel);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.1;
+    color: var(--color-foreground);
+    text-shadow: 0 4px 0 oklch(0.08 0.02 260);
+  }
+
+  .section-copy {
+    font-family: var(--font-sans);
+    margin-top: 0.9rem;
+    max-width: 36rem;
+    color: color-mix(in oklab, var(--color-foreground) 82%, transparent);
+    line-height: 1.65;
+  }
+
+  /* Minecraft RPG HUD Pill */
+  .badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid oklch(0.32 0.04 145);
+    background: oklch(0.14 0.02 260 / 95%);
+    padding: 0.35rem 0.85rem;
+    font-family: var(--font-hud);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-lime);
+    box-shadow:
+      inset 1px 1px 0 oklch(0.45 0.05 145 / 40%),
+      inset -1px -1px 0 oklch(0.08 0.02 260),
+      0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  /* 3D Extruded Diamond Action Button */
+  .pixel-btn-diamond,
+  .btn-candy {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid #5ffbf1;
+    background: linear-gradient(180deg, #38ef7d 0%, #00b4d8 100%);
+    padding: 0.75rem 1.45rem;
+    font-family: var(--font-hud);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #05141c;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow:
+      inset 2px 2px 0 #a0fff7,
+      inset -2px -2px 0 #0077b6,
+      0 6px 0 -1px #005f73,
+      0 14px 25px rgba(0, 229, 255, 0.4);
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease;
+    cursor: pointer;
+  }
+  .pixel-btn-diamond:hover,
+  .btn-candy:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      inset 2px 2px 0 #a0fff7,
+      inset -2px -2px 0 #0077b6,
+      0 8px 0 -1px #005f73,
+      0 20px 32px rgba(0, 229, 255, 0.55);
+  }
+  .pixel-btn-diamond:active,
+  .btn-candy:active {
+    transform: translateY(4px);
+    box-shadow:
+      inset 2px 2px 0 #0077b6,
+      inset -2px -2px 0 #a0fff7,
+      0 2px 0 -1px #005f73,
+      0 6px 12px rgba(0, 229, 255, 0.3);
+  }
+
+  /* 3D Extruded Stone / Bedrock Action Button */
+  .pixel-btn-stone,
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid oklch(0.38 0.03 260);
+    background: oklch(0.2 0.02 260);
+    padding: 0.75rem 1.35rem;
+    font-family: var(--font-hud);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    box-shadow:
+      inset 2px 2px 0 oklch(0.48 0.03 260 / 60%),
+      inset -2px -2px 0 oklch(0.08 0.01 260),
+      0 5px 0 -1px oklch(0.1 0.01 260),
+      0 10px 20px rgba(0, 0, 0, 0.4);
+    transition:
+      transform 0.12s ease,
+      box-shadow 0.12s ease,
+      background 0.12s ease;
+    cursor: pointer;
+  }
+  .pixel-btn-stone:hover,
+  .btn-ghost:hover {
+    transform: translateY(-2px);
+    background: oklch(0.25 0.02 260);
+    box-shadow:
+      inset 2px 2px 0 oklch(0.55 0.03 260 / 70%),
+      inset -2px -2px 0 oklch(0.08 0.01 260),
+      0 7px 0 -1px oklch(0.1 0.01 260),
+      0 16px 26px rgba(0, 0, 0, 0.5);
+  }
+  .pixel-btn-stone:active,
+  .btn-ghost:active {
+    transform: translateY(3px);
+    box-shadow:
+      inset 2px 2px 0 oklch(0.08 0.01 260),
+      inset -2px -2px 0 oklch(0.48 0.03 260 / 60%),
+      0 2px 0 -1px oklch(0.1 0.01 260);
+  }
+
+  /* Minecraft Logo Chip */
+  .logo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-hud);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.16em;
+    color: var(--color-foreground);
+    padding: 0.4rem 0.8rem;
+    background: oklch(0.14 0.02 260 / 85%);
+    border: 2px solid oklch(0.3 0.03 260);
+    box-shadow:
+      inset 1px 1px 0 oklch(0.4 0.03 260 / 50%),
+      0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+  .logo-dot {
+    height: 0.65rem;
+    width: 0.65rem;
+    background: #00e5ff;
+    box-shadow: 0 0 10px #00e5ff;
+    animation: beacon-pulse 2s ease-in-out infinite;
+  }
+
+  .nav-link {
+    font-family: var(--font-hud);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    position: relative;
+    white-space: nowrap;
+    transition: color 0.18s ease;
+  }
+  .nav-link:hover {
+    color: #00e5ff;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+  }
+
+  /* Minecraft Inventory Slot */
+  .inventory-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: oklch(0.12 0.02 260);
+    border: 2px solid oklch(0.28 0.02 260);
+    box-shadow:
+      inset 2px 2px 0 oklch(0.06 0.01 260),
+      inset -2px -2px 0 oklch(0.32 0.02 260 / 50%),
+      0 6px 14px rgba(0, 0, 0, 0.5);
+    transition:
+      transform 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .inventory-slot:hover {
+    transform: translateY(-3px);
+    border-color: #00e5ff;
+  }
+
+  /* Biome / Realm Cards */
+  .track-card,
+  .biome-card {
+    border-radius: var(--radius-sm);
+    border: 2px solid oklch(0.3 0.03 260);
+    background: oklch(0.15 0.02 260 / 95%);
+    padding: 1.25rem;
+    box-shadow:
+      inset 2px 2px 0 oklch(0.38 0.03 260 / 50%),
+      inset -2px -2px 0 oklch(0.08 0.01 260),
+      0 8px 24px rgba(0, 0, 0, 0.5);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .track-card:hover,
+  .biome-card:hover {
+    transform: translateY(-4px);
+    border-color: #00e5ff;
+    box-shadow:
+      inset 2px 2px 0 oklch(0.38 0.03 260 / 50%),
+      inset -2px -2px 0 oklch(0.08 0.01 260),
+      0 14px 32px rgba(0, 229, 255, 0.2);
+  }
+
+  /* Quest Step Row */
+  .timeline-row,
+  .quest-row {
+    border-radius: var(--radius-sm);
+    border: 2px solid oklch(0.28 0.03 260);
+    background: oklch(0.14 0.02 260 / 90%);
+    padding: 1.1rem 1.25rem;
+    box-shadow:
+      inset 1px 1px 0 oklch(0.35 0.03 260 / 40%),
+      inset -1px -1px 0 oklch(0.08 0.01 260),
+      0 6px 16px rgba(0, 0, 0, 0.4);
+    transition:
+      border-color 0.15s ease,
+      transform 0.15s ease;
+  }
+  .quest-row:hover {
+    border-color: #50fa7b;
+    transform: translateX(4px);
+  }
+
+  /* Rarity Chips & Badges */
+  .chip {
+    border-radius: var(--radius-sm);
+    border: 1px solid oklch(0.38 0.03 260);
+    background: oklch(0.16 0.02 260);
+    padding: 0.35rem 0.75rem;
+    font-family: var(--font-hud);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--color-foreground);
+    box-shadow:
+      inset 1px 1px 0 oklch(0.3 0.02 260 / 50%),
+      0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Trading Hall Sponsor Slot */
+  .sponsor-slot {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-sm);
+    border: 2px dashed oklch(0.42 0.05 85 / 60%);
+    background: oklch(0.13 0.02 260 / 85%);
+    font-family: var(--font-hud);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: oklch(0.88 0.19 85);
+    box-shadow: inset 0 0 16px rgba(234, 179, 8, 0.1);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .sponsor-slot:hover {
+    border-color: #ffd700;
+    box-shadow:
+      inset 0 0 20px rgba(255, 215, 0, 0.2),
+      0 0 18px rgba(255, 215, 0, 0.25);
+  }
+
+  .scroll-hint {
+    font-family: var(--font-hud);
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-lime);
+    animation: bob 2s ease-in-out infinite;
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes beacon-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
