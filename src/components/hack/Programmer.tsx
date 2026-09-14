@@ -4,27 +4,33 @@ import { Text } from "@react-three/drei";
 import * as THREE from "three";
 import { scrollRef } from "./useScrollProgress";
 
-const SKIN = "#f5c69b";
-const SKIN_SHADOW = "#e0ab7c";
-const TUNIC = "#0d9488"; // Deep emerald / teal tunic
-const TUNIC_DARK = "#042f2e";
-const HAIR = "#261c14";
-const CHAIR = "#18181b"; // Dark obsidian stone chair
-const CHAIR_ACCENT = "#00e5ff"; // Diamond cyan piping
-const METAL = "#71717a";
+// Color Palette for Realistic Developer Setup
+const SKIN_TONE = "#e4a887";
+const SKIN_SHADOW = "#cc8b69";
+const HAIR_COLOR = "#1c1510";
+const HOODIE_COLOR = "#181b22";
+const HOODIE_ACCENT = "#0d9488";
+const DENIM_COLOR = "#1e2535";
+const SNEAKER_WHITE = "#f8fafc";
+const SNEAKER_DARK = "#0f172a";
+const CHAIR_FRAME = "#11141a";
+const CHAIR_MESH = "#1a1f29";
+const CHAIR_ACCENT = "#00e5ff";
+const METAL_CHROME = "#94a3b8";
+const LAPTOP_CHASSIS = "#2d3440";
 
 /**
  * Floating Holographic Code Particle rising from the laptop screen.
  */
-function HoloCode() {
+function HolographicSyntax() {
   const group = useRef<THREE.Group>(null);
   const glyphs = useMemo(
     () => [
-      { text: "{ }", x: -0.25, z: 0.1, speed: 1.2, offset: 0 },
-      { text: "AI", x: 0.22, z: -0.05, speed: 1.5, offset: 1.2 },
-      { text: "</>", x: -0.1, z: 0.15, speed: 1.1, offset: 2.3 },
-      { text: "01", x: 0.15, z: 0.2, speed: 1.4, offset: 3.1 },
-      { text: "=>", x: -0.3, z: -0.1, speed: 1.3, offset: 4.0 },
+      { text: "def train_ai():", x: -0.28, z: 0.08, speed: 0.9, offset: 0 },
+      { text: "model.fit()", x: 0.24, z: -0.06, speed: 1.1, offset: 1.1 },
+      { text: "loss: 0.0012", x: -0.12, z: 0.14, speed: 1.0, offset: 2.2 },
+      { text: "accuracy: 99.8%", x: 0.16, z: 0.18, speed: 1.2, offset: 3.3 },
+      { text: "return solution", x: -0.26, z: -0.12, speed: 0.95, offset: 4.4 },
     ],
     [],
   );
@@ -34,25 +40,24 @@ function HoloCode() {
     if (!group.current) return;
     group.current.children.forEach((child, i) => {
       const g = glyphs[i];
-      const life = (t * g.speed + g.offset) % 3;
-      child.position.y = 0.4 + life * 0.45;
-      child.position.x = g.x + Math.sin(t * 2 + i) * 0.05;
-      // Fade out near the top
-      const scale = life < 0.4 ? life / 0.4 : Math.max(0, 1 - (life - 1.8) / 1.2);
-      child.scale.set(scale * 0.45, scale * 0.45, scale * 0.45);
+      const life = (t * g.speed + g.offset) % 3.5;
+      child.position.y = 0.42 + life * 0.38;
+      child.position.x = g.x + Math.sin(t * 1.8 + i) * 0.03;
+      const opacity = life < 0.5 ? life / 0.5 : Math.max(0, 1 - (life - 2.0) / 1.5);
+      child.scale.set(opacity * 0.38, opacity * 0.38, opacity * 0.38);
     });
   });
 
   return (
-    <group ref={group} position={[0, 0.4, 0.4]}>
+    <group ref={group} position={[0, 0.42, 0.4]}>
       {glyphs.map((g, i) => (
         <group key={i} position={[g.x, 0, g.z]}>
           <Text
-            fontSize={0.28}
+            fontSize={0.24}
             color="#5ffbf1"
             anchorX="center"
             anchorY="middle"
-            outlineWidth={0.02}
+            outlineWidth={0.018}
             outlineColor="#022c22"
           >
             {g.text}
@@ -64,113 +69,297 @@ function HoloCode() {
 }
 
 /**
- * Cute Miniature Voxel Allay / Cyber-Companion floating near the coder's shoulder.
+ * Realistic Developer Workstation: Sleek Aluminum Unibody Laptop
+ * with precision backlit chiclet keyboard, glass trackpad, and code display.
  */
-function VoxelAllay({ velocity }: { velocity: number }) {
-  const allayRef = useRef<THREE.Group>(null);
-  const leftWing = useRef<THREE.Mesh>(null);
-  const rightWing = useRef<THREE.Mesh>(null);
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    if (!allayRef.current) return;
-
-    // Bobbing and playful lag
-    allayRef.current.position.y = 1.35 + Math.sin(t * 3.5) * 0.12 - velocity * 0.5;
-    allayRef.current.position.x = 1.05 + Math.cos(t * 2.2) * 0.08;
-    allayRef.current.position.z = 0.25 + Math.sin(t * 2.8) * 0.1;
-    allayRef.current.rotation.y = Math.sin(t * 1.8) * 0.35 - 0.2;
-    allayRef.current.rotation.z = Math.sin(t * 3.5) * 0.15 - velocity * 0.4;
-    allayRef.current.rotation.x = Math.max(-0.4, Math.min(0.4, velocity * 0.8));
-
-    // Fast fluttering wings
-    const wingFlap = Math.sin(t * 28) * 0.7;
-    if (leftWing.current) leftWing.current.rotation.y = wingFlap;
-    if (rightWing.current) rightWing.current.rotation.y = -wingFlap;
-  });
-
+function RealisticLaptop({ lightRef }: { lightRef: React.RefObject<THREE.PointLight | null> }) {
   return (
-    <group ref={allayRef} position={[1.05, 1.35, 0.25]} scale={0.42}>
-      {/* Allay Body */}
-      <mesh castShadow>
-        <boxGeometry args={[0.5, 0.6, 0.45]} />
-        <meshStandardMaterial color="#00e5ff" roughness={0.4} />
+    <group position={[0, 0.58, 0.82]}>
+      {/* CNC Aluminum Laptop Base Chassis */}
+      <mesh rotation-x={-0.12} castShadow receiveShadow>
+        <boxGeometry args={[1.15, 0.045, 0.78]} />
+        <meshStandardMaterial
+          color={LAPTOP_CHASSIS}
+          metalness={0.75}
+          roughness={0.28}
+        />
       </mesh>
-      {/* Cute Big Eyes */}
-      {[-0.14, 0.14].map((x) => (
-        <group key={x} position={[x, 0.08, 0.24]}>
-          <mesh>
-            <boxGeometry args={[0.1, 0.16, 0.02]} />
-            <meshBasicMaterial color="#ffffff" />
+
+      {/* Recessed Keyboard Well */}
+      <mesh position={[0, 0.026, 0.04]} rotation-x={-0.12}>
+        <boxGeometry args={[1.02, 0.01, 0.44]} />
+        <meshStandardMaterial color="#131720" roughness={0.7} />
+      </mesh>
+
+      {/* Individual Key Rows (Chiclet Backlit Keyboard) */}
+      {[-0.14, -0.07, 0, 0.07, 0.14].map((z, rowIdx) => (
+        <mesh key={rowIdx} position={[0, 0.036, 0.04 + z]} rotation-x={-0.12}>
+          <boxGeometry args={[0.98, 0.012, 0.052]} />
+          <meshStandardMaterial color="#1e232e" roughness={0.5} />
+        </mesh>
+      ))}
+
+      {/* Soft Cyan RGB Key Backlight Glow Plate */}
+      <mesh position={[0, 0.031, 0.04]} rotation-x={-0.12}>
+        <boxGeometry args={[1.0, 0.005, 0.42]} />
+        <meshBasicMaterial color="#00e5ff" transparent opacity={0.3} />
+      </mesh>
+
+      {/* Precision Glass Trackpad */}
+      <mesh position={[0, 0.026, 0.3]} rotation-x={-0.12}>
+        <boxGeometry args={[0.42, 0.008, 0.22]} />
+        <meshStandardMaterial
+          color="#384050"
+          roughness={0.2}
+          metalness={0.6}
+        />
+      </mesh>
+
+      {/* Ultra-thin Laptop Display Lid (angled comfortably toward developer) */}
+      <group position={[0, 0.38, -0.36]} rotation-x={-0.24}>
+        {/* Rear Aluminum Cover */}
+        <mesh castShadow>
+          <boxGeometry args={[1.15, 0.78, 0.035]} />
+          <meshStandardMaterial
+            color={LAPTOP_CHASSIS}
+            metalness={0.8}
+            roughness={0.25}
+          />
+        </mesh>
+        {/* Glowing Apple/Tech Logo on Back of Lid */}
+        <mesh position={[0, 0, -0.02]}>
+          <circleGeometry args={[0.07, 32]} />
+          <meshBasicMaterial color="#ffffff" toneMapped={false} />
+        </mesh>
+
+        {/* Minimal Black Screen Bezel */}
+        <mesh position={[0, 0, 0.019]}>
+          <boxGeometry args={[1.12, 0.75, 0.005]} />
+          <meshStandardMaterial color="#090b0e" roughness={0.15} />
+        </mesh>
+
+        {/* Realistic High-Res IDE Code Screen Display */}
+        <mesh position={[0, 0, 0.024]}>
+          <boxGeometry args={[1.06, 0.69, 0.005]} />
+          <meshBasicMaterial color="#071a1d" toneMapped={false} />
+        </mesh>
+
+        {/* Editor Sidebar (File Tree) */}
+        <mesh position={[-0.42, 0, 0.028]}>
+          <boxGeometry args={[0.18, 0.67, 0.002]} />
+          <meshBasicMaterial color="#051316" toneMapped={false} />
+        </mesh>
+
+        {/* Line Numbers Column */}
+        <mesh position={[-0.31, 0, 0.028]}>
+          <boxGeometry args={[0.04, 0.67, 0.002]} />
+          <meshBasicMaterial color="#0b282d" toneMapped={false} />
+        </mesh>
+
+        {/* Realistic Syntax Lines in Editor (Cyan, Emerald, Amber, Purple) */}
+        {[
+          { y: 0.27, w: 0.45, x: -0.05, color: "#00f5d4" },
+          { y: 0.21, w: 0.58, x: 0.02, color: "#38ef7d" },
+          { y: 0.15, w: 0.36, x: -0.09, color: "#a855f7" },
+          { y: 0.09, w: 0.52, x: -0.01, color: "#ffd166" },
+          { y: 0.03, w: 0.42, x: -0.06, color: "#00f5d4" },
+          { y: -0.03, w: 0.62, x: 0.04, color: "#38ef7d" },
+          { y: -0.09, w: 0.32, x: -0.11, color: "#ff5555" },
+          { y: -0.15, w: 0.48, x: -0.03, color: "#00f5d4" },
+          { y: -0.21, w: 0.54, x: 0.0, color: "#ffd166" },
+          { y: -0.27, w: 0.28, x: -0.13, color: "#a855f7" },
+        ].map((line, idx) => (
+          <mesh key={idx} position={[line.x, line.y, 0.03]}>
+            <boxGeometry args={[line.w, 0.024, 0.002]} />
+            <meshBasicMaterial color={line.color} toneMapped={false} />
           </mesh>
-          <mesh position={[0, -0.02, 0.01]}>
-            <boxGeometry args={[0.07, 0.1, 0.02]} />
-            <meshBasicMaterial color="#042f2e" />
+        ))}
+
+        {/* Status Bar at Bottom of Screen */}
+        <mesh position={[0, -0.32, 0.028]}>
+          <boxGeometry args={[1.06, 0.035, 0.002]} />
+          <meshBasicMaterial color="#0d9488" toneMapped={false} />
+        </mesh>
+      </group>
+
+      {/* Real-time Dynamic Screen Light casting onto developer's face, hands & chest */}
+      <pointLight
+        ref={lightRef}
+        position={[0, 0.35, 0.15]}
+        color="#00f5d4"
+        distance={3.2}
+        intensity={2.8}
+        castShadow
+      />
+
+      {/* Rising Holographic Syntax Particles */}
+      <HolographicSyntax />
+    </group>
+  );
+}
+
+/**
+ * Designer Ergonomic Gaming Throne (Herman Miller Embody / Secretlab Titan Style)
+ * Sculpted spine vertebrae, breathable contoured mesh back, waterfall seat,
+ * 3D armrests, and 5-star metallic caster base with anti-gravity hover stabilizer.
+ */
+function ErgonomicThrone() {
+  return (
+    <group>
+      {/* 5-Star Spider Caster Wheel Base */}
+      <group position={[0, -1.36, 0]}>
+        {/* Center Hub */}
+        <mesh castShadow>
+          <cylinderGeometry args={[0.22, 0.24, 0.14, 16]} />
+          <meshStandardMaterial color={METAL_CHROME} metalness={0.8} roughness={0.2} />
+        </mesh>
+        {/* 5 Radial Base Arms */}
+        {[0, 1, 2, 3, 4].map((i) => {
+          const angle = (i * 2 * Math.PI) / 5;
+          return (
+            <group key={i} rotation-y={angle}>
+              <mesh position={[0.42, -0.04, 0]} rotation-z={-0.1} castShadow>
+                <boxGeometry args={[0.82, 0.08, 0.14]} />
+                <meshStandardMaterial color={CHAIR_FRAME} roughness={0.5} metalness={0.4} />
+              </mesh>
+              {/* Dual-Wheel Roller Caster */}
+              <group position={[0.78, -0.16, 0]}>
+                <mesh castShadow>
+                  <cylinderGeometry args={[0.07, 0.07, 0.08, 12]} />
+                  <meshStandardMaterial color="#090b0e" roughness={0.7} />
+                </mesh>
+              </group>
+            </group>
+          );
+        })}
+
+        {/* Subtle Anti-Gravity Ion Ring beneath base */}
+        <mesh position={[0, -0.14, 0]} rotation-x={Math.PI / 2}>
+          <ringGeometry args={[0.65, 0.85, 32]} />
+          <meshBasicMaterial color="#00e5ff" transparent opacity={0.35} />
+        </mesh>
+        <pointLight position={[0, -0.2, 0]} color="#00e5ff" distance={2.5} intensity={1.5} />
+      </group>
+
+      {/* Hydraulic Steel Gas-Lift Cylinder */}
+      <mesh position={[0, -0.96, 0]} castShadow>
+        <cylinderGeometry args={[0.11, 0.11, 0.68, 20]} />
+        <meshStandardMaterial color={METAL_CHROME} metalness={0.9} roughness={0.15} />
+      </mesh>
+      <mesh position={[0, -0.72, 0]}>
+        <cylinderGeometry args={[0.14, 0.14, 0.24, 16]} />
+        <meshStandardMaterial color={CHAIR_FRAME} roughness={0.6} />
+      </mesh>
+
+      {/* Mechanical Tilt Mechanism Box under Seat */}
+      <mesh position={[0, -0.54, 0]} castShadow>
+        <boxGeometry args={[0.65, 0.16, 0.6]} />
+        <meshStandardMaterial color="#1e232e" metalness={0.6} roughness={0.4} />
+      </mesh>
+
+      {/* Ergonomic Seat Pan with Contoured Thigh Bolsters & Waterfall Front */}
+      <group position={[0, -0.42, 0.02]}>
+        {/* Main Seat Core */}
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={[1.25, 0.18, 1.15]} />
+          <meshStandardMaterial color={CHAIR_MESH} roughness={0.8} />
+        </mesh>
+        {/* Contoured Padded Seat Cushion */}
+        <mesh position={[0, 0.09, 0]}>
+          <boxGeometry args={[1.15, 0.06, 1.05]} />
+          <meshStandardMaterial color="#11141b" roughness={0.7} />
+        </mesh>
+        {/* Waterfall Curved Front Lip */}
+        <mesh position={[0, 0.04, 0.56]} rotation-x={0.4}>
+          <boxGeometry args={[1.14, 0.08, 0.14]} />
+          <meshStandardMaterial color={CHAIR_MESH} roughness={0.8} />
+        </mesh>
+        {/* Side Cushion Bolsters */}
+        {[-0.56, 0.56].map((x) => (
+          <mesh key={x} position={[x, 0.13, 0]}>
+            <boxGeometry args={[0.14, 0.09, 1.02]} />
+            <meshStandardMaterial color="#0c0e13" roughness={0.8} />
+          </mesh>
+        ))}
+      </group>
+
+      {/* Ergonomic Spine Backrest with Lumbar Ribs (Embody Matrix Style) */}
+      <group position={[0, 0.44, -0.52]} rotation-x={0.06}>
+        {/* Central Spine Column */}
+        <mesh position={[0, 0, 0]} castShadow>
+          <cylinderGeometry args={[0.08, 0.1, 1.55, 16]} />
+          <meshStandardMaterial color={METAL_CHROME} metalness={0.7} roughness={0.25} />
+        </mesh>
+
+        {/* Flexible Lumbar Rib Matrix */}
+        {[-0.45, -0.22, 0.02, 0.26, 0.5].map((y, idx) => (
+          <mesh key={idx} position={[0, y, 0.06]} castShadow>
+            <boxGeometry args={[1.05 - Math.abs(y) * 0.35, 0.07, 0.08]} />
+            <meshStandardMaterial color={CHAIR_FRAME} roughness={0.6} />
+          </mesh>
+        ))}
+
+        {/* Breathable Mesh Backrest Membrane */}
+        <mesh position={[0, 0.04, 0.12]} castShadow receiveShadow>
+          <boxGeometry args={[1.16, 1.52, 0.06]} />
+          <meshStandardMaterial color={CHAIR_MESH} roughness={0.85} />
+        </mesh>
+
+        {/* Lumbar Support Pillow */}
+        <mesh position={[0, -0.2, 0.16]}>
+          <boxGeometry args={[0.82, 0.28, 0.08]} />
+          <meshStandardMaterial color="#0c0e13" roughness={0.7} />
+        </mesh>
+
+        {/* Stitched Cyan Edge Piping */}
+        {[-0.58, 0.58].map((x) => (
+          <mesh key={x} position={[x, 0.04, 0.13]}>
+            <boxGeometry args={[0.03, 1.5, 0.06]} />
+            <meshBasicMaterial color={CHAIR_ACCENT} toneMapped={false} />
+          </mesh>
+        ))}
+
+        {/* Ergonomic Headrest with Neck Support */}
+        <group position={[0, 0.88, 0.16]} rotation-x={-0.1}>
+          <mesh castShadow>
+            <boxGeometry args={[0.72, 0.28, 0.14]} />
+            <meshStandardMaterial color="#11141b" roughness={0.7} />
+          </mesh>
+          <mesh position={[0, 0, 0.06]}>
+            <boxGeometry args={[0.62, 0.22, 0.04]} />
+            <meshStandardMaterial color="#0a0c10" roughness={0.8} />
+          </mesh>
+        </group>
+      </group>
+
+      {/* 3D Adjustable Armrests with Soft PU Foam Pads */}
+      {[-0.66, 0.66].map((x) => (
+        <group key={x} position={[x, -0.06, 0.02]}>
+          {/* Steel Arm Stems */}
+          <mesh position={[0, 0, 0]} castShadow>
+            <cylinderGeometry args={[0.045, 0.05, 0.44, 12]} />
+            <meshStandardMaterial color={METAL_CHROME} metalness={0.8} roughness={0.2} />
+          </mesh>
+          {/* Contoured Padded Armrest Top */}
+          <mesh position={[0, 0.22, 0.06]} castShadow>
+            <boxGeometry args={[0.18, 0.065, 0.76]} />
+            <meshStandardMaterial color="#0a0c10" roughness={0.65} />
           </mesh>
         </group>
       ))}
-      {/* Floating Diamond in Hand */}
-      <mesh position={[0, -0.42, 0.3]}>
-        <octahedronGeometry args={[0.16, 0]} />
-        <meshBasicMaterial color="#50fa7b" toneMapped={false} />
-      </mesh>
-      <pointLight color="#00e5ff" distance={2} intensity={1.8} />
-
-      {/* Translucent Wings */}
-      <mesh ref={leftWing} position={[-0.26, 0.1, -0.15]}>
-        <boxGeometry args={[0.55, 0.35, 0.02]} />
-        <meshStandardMaterial color="#a5f3fc" transparent opacity={0.7} roughness={0.2} />
-      </mesh>
-      <mesh ref={rightWing} position={[0.26, 0.1, -0.15]}>
-        <boxGeometry args={[0.55, 0.35, 0.02]} />
-        <meshStandardMaterial color="#a5f3fc" transparent opacity={0.7} roughness={0.2} />
-      </mesh>
     </group>
   );
 }
 
 /**
- * Animated Voxel Thruster Flame underneath the hover chair.
- */
-function ThrusterFlame({ position }: { position: [number, number, number] }) {
-  const flameRef = useRef<THREE.Group>(null);
-  const lightRef = useRef<THREE.PointLight>(null);
-
-  useFrame(({ clock }) => {
-    const t = clock.getElapsedTime();
-    if (flameRef.current) {
-      const scaleY = 1 + Math.sin(t * 22) * 0.35;
-      const scaleXZ = 1 + Math.cos(t * 18) * 0.2;
-      flameRef.current.scale.set(scaleXZ, scaleY, scaleXZ);
-    }
-    if (lightRef.current) {
-      lightRef.current.intensity = 2.5 + Math.sin(t * 20) * 1.0;
-    }
-  });
-
-  return (
-    <group position={position}>
-      <group ref={flameRef} position={[0, -0.12, 0]}>
-        {/* Outer Cyan Flame */}
-        <mesh>
-          <boxGeometry args={[0.18, 0.35, 0.18]} />
-          <meshBasicMaterial color="#00e5ff" toneMapped={false} />
-        </mesh>
-        {/* Core White-Hot Flame */}
-        <mesh position={[0, 0.04, 0]}>
-          <boxGeometry args={[0.1, 0.22, 0.1]} />
-          <meshBasicMaterial color="#ffffff" toneMapped={false} />
-        </mesh>
-      </group>
-      <pointLight ref={lightRef} color="#00e5ff" distance={2.5} intensity={2.5} />
-    </group>
-  );
-}
-
-/**
- * Ultra-defined Kenney + Minecraft style hacker character with responsive physics,
- * blinking eyes, animated typing flurries, screen glow, hover throne thrusters,
- * and a floating voxel Allay pet companion.
+ * Highly Realistic & Defined Developer Character:
+ * - Anatomically proportioned human coder seated in ergonomic posture
+ * - Detailed sculpted face with blinking eyes, nose bridge, jawline, and stylish textured hair
+ * - Premium studio over-ear headphones with metallic yoke and glowing earcups
+ * - Streetwear developer hoodie with natural cloth folds, kangaroo pouch & cuffs
+ * - Tapered denim jeans with knee wrinkles
+ * - Stylized designer sneakers resting on footrests
+ * - Articulated arms and realistic sculpted hands actively typing across the keyboard
  */
 export function Programmer() {
   const root = useRef<THREE.Group>(null);
@@ -179,14 +368,12 @@ export function Programmer() {
   const rightEye = useRef<THREE.Group>(null);
   const leftArm = useRef<THREE.Group>(null);
   const rightArm = useRef<THREE.Group>(null);
-  const leftHand = useRef<THREE.Mesh>(null);
-  const rightHand = useRef<THREE.Mesh>(null);
+  const leftHand = useRef<THREE.Group>(null);
+  const rightHand = useRef<THREE.Group>(null);
   const chair = useRef<THREE.Group>(null);
-  const laptop = useRef<THREE.Group>(null);
   const torso = useRef<THREE.Group>(null);
   const screenLight = useRef<THREE.PointLight>(null);
 
-  // Smooth tracker for scroll velocity
   const smoothVel = useRef(0);
   const blinkTimer = useRef(0);
   const isBlinking = useRef(false);
@@ -195,424 +382,358 @@ export function Programmer() {
     const t = clock.getElapsedTime();
     const dt = Math.min(delta, 0.05);
 
-    // Track scroll velocity with snappy spring smoothing (Kenney style!)
+    // Track scroll velocity with smooth spring physics
     const currentVel = scrollRef.velocity || 0;
     smoothVel.current += (currentVel * 10 - smoothVel.current) * (1 - Math.exp(-12 * dt));
     const vel = smoothVel.current;
     const absVel = Math.abs(vel);
 
-    // Blinking animation: Every ~3.6s, blink for 0.12s
+    // Natural Blinking Animation (Blinks every ~3.8 seconds for 0.12s)
     blinkTimer.current += dt;
-    if (blinkTimer.current > 3.6) {
+    if (blinkTimer.current > 3.8) {
       isBlinking.current = true;
-      if (blinkTimer.current > 3.75) {
+      if (blinkTimer.current > 3.94) {
         isBlinking.current = false;
         blinkTimer.current = 0;
       }
     }
-    const eyeScaleY = isBlinking.current ? 0.1 : 1;
+    const eyeScaleY = isBlinking.current ? 0.08 : 1;
     if (leftEye.current) leftEye.current.scale.y = eyeScaleY;
     if (rightEye.current) rightEye.current.scale.y = eyeScaleY;
 
-    // Head Animation: Dynamic look-at + breathing bob + reactive forward pitch on descent
+    // Head Animation: Natural breathing bob + focused gaze + reactive descent tilt
     if (head.current) {
-      head.current.rotation.z = Math.sin(t * 2.8) * 0.04 - vel * 0.08;
-      head.current.rotation.x = Math.max(-0.25, Math.min(0.4, 0.08 + vel * 0.25));
-      head.current.rotation.y = Math.sin(t * 1.4) * 0.08;
-      head.current.position.y = 1.34 + Math.sin(t * 5.2) * 0.025;
+      head.current.rotation.z = Math.sin(t * 1.8) * 0.02 - vel * 0.06;
+      head.current.rotation.x = Math.max(-0.2, Math.min(0.35, 0.12 + vel * 0.22));
+      head.current.rotation.y = Math.sin(t * 1.2) * 0.04;
+      head.current.position.y = 1.32 + Math.sin(t * 3.4) * 0.012;
     }
 
-    // Torso breathing & reactive forward lean during fast scrolling
+    // Torso Natural Breathing (chest rises & falls organically)
     if (torso.current) {
-      torso.current.rotation.x = Math.max(-0.15, Math.min(0.3, vel * 0.2));
-      torso.current.position.y = 0.38 + Math.sin(t * 2.6) * 0.015;
+      torso.current.rotation.x = Math.max(-0.1, Math.min(0.24, 0.04 + vel * 0.18));
+      torso.current.position.y = 0.38 + Math.sin(t * 2.2) * 0.01;
+      torso.current.scale.set(
+        1 + Math.sin(t * 2.2) * 0.008,
+        1 + Math.sin(t * 2.2) * 0.012,
+        1 + Math.sin(t * 2.2) * 0.01,
+      );
     }
 
-    // Typing speed scales with scroll velocity (frenzied typing when descending!)
-    const typingSpeed = 12 + absVel * 24;
+    // Realistic Typing Dynamics (Burst typing with natural rhythmic pacing)
+    const burstPhase = Math.sin(t * 4);
+    const typingMultiplier = burstPhase > 0 ? 1 : 0.4;
+    const baseSpeed = (14 + absVel * 22) * typingMultiplier;
+
     if (leftHand.current) {
-      leftHand.current.position.y = 0.72 + Math.abs(Math.sin(t * typingSpeed)) * 0.08;
-      leftHand.current.position.z = 0.68 + Math.cos(t * typingSpeed * 0.5) * 0.02;
+      leftHand.current.position.y = 0.71 + Math.abs(Math.sin(t * baseSpeed)) * 0.045;
+      leftHand.current.position.z = 0.72 + Math.cos(t * baseSpeed * 0.6) * 0.018;
+      leftHand.current.rotation.x = -0.2 + Math.sin(t * baseSpeed) * 0.06;
     }
     if (rightHand.current) {
-      rightHand.current.position.y = 0.72 + Math.abs(Math.cos(t * (typingSpeed + 2))) * 0.08;
-      rightHand.current.position.z = 0.68 + Math.sin(t * (typingSpeed + 2) * 0.5) * 0.02;
+      rightHand.current.position.y = 0.71 + Math.abs(Math.cos(t * (baseSpeed + 2.5))) * 0.045;
+      rightHand.current.position.z = 0.72 + Math.sin(t * (baseSpeed + 2.5) * 0.6) * 0.018;
+      rightHand.current.rotation.x = -0.2 + Math.cos(t * baseSpeed) * 0.06;
     }
 
-    // Arms subtle sway
-    if (leftArm.current)
-      leftArm.current.rotation.x = -0.85 + Math.sin(t * typingSpeed * 0.5) * 0.05;
-    if (rightArm.current)
-      rightArm.current.rotation.x = -0.85 + Math.cos(t * typingSpeed * 0.5) * 0.05;
+    // Arms subtle sway following fingers
+    if (leftArm.current) leftArm.current.rotation.x = -0.78 + Math.sin(t * baseSpeed * 0.4) * 0.025;
+    if (rightArm.current) rightArm.current.rotation.x = -0.78 + Math.cos(t * baseSpeed * 0.4) * 0.025;
 
-    // Chair subtle hovering float
+    // Chair subtle hydraulic float
     if (chair.current) {
-      chair.current.position.y = Math.sin(t * 2.2) * 0.04;
-      chair.current.rotation.y = Math.sin(t * 0.8) * 0.05;
+      chair.current.position.y = Math.sin(t * 1.8) * 0.025;
+      chair.current.rotation.y = Math.sin(t * 0.6) * 0.03;
     }
 
-    // Laptop subtle vibration from aggressive typing
-    if (laptop.current) {
-      laptop.current.position.y = 0.62 + Math.sin(t * typingSpeed * 0.3) * 0.008;
-      laptop.current.rotation.z = Math.sin(t * 1.5) * 0.015;
-    }
-
-    // Laptop screen glow light flicker
+    // Dynamic Screen Light Flicker from live code compiling
     if (screenLight.current) {
-      screenLight.current.intensity = 2.4 + Math.sin(t * 16) * 0.4 + absVel * 1.2;
+      screenLight.current.intensity = 2.6 + Math.sin(t * 14) * 0.35 + absVel * 1.2;
     }
   });
 
   return (
-    <group ref={root} scale={1.18}>
-      {/* Voxel Allay Pet Companion */}
-      <VoxelAllay velocity={smoothVel.current} />
-
-      {/* ENCHANTED HOVER GAMING THRONE */}
+    <group ref={root} scale={1.16}>
+      {/* ERGONOMIC DESIGNER GAMING THRONE */}
       <group ref={chair}>
-        {/* Base Plate with Diamond Inlay */}
-        <mesh position={[0, -1.35, 0]} castShadow>
-          <boxGeometry args={[1.05, 0.18, 1.05]} />
-          <meshStandardMaterial color={METAL} roughness={0.4} metalness={0.5} />
-        </mesh>
-        <mesh position={[0, -1.25, 0]}>
-          <boxGeometry args={[0.85, 0.04, 0.85]} />
-          <meshBasicMaterial color={CHAIR_ACCENT} toneMapped={false} />
-        </mesh>
-
-        {/* 4 Corner Hover Thruster Blocks with animated flames */}
-        {[
-          [-0.42, -0.42],
-          [0.42, -0.42],
-          [-0.42, 0.42],
-          [0.42, 0.42],
-        ].map(([x, z], i) => (
-          <group key={i} position={[x, -1.38, z]}>
-            <mesh>
-              <boxGeometry args={[0.2, 0.16, 0.2]} />
-              <meshStandardMaterial color="#0f172a" roughness={0.6} />
-            </mesh>
-            <ThrusterFlame position={[0, -0.06, 0]} />
-          </group>
-        ))}
-
-        {/* Central Hydraulic Piston Stem */}
-        <mesh position={[0, -0.92, 0]} castShadow>
-          <boxGeometry args={[0.24, 0.72, 0.24]} />
-          <meshStandardMaterial color={METAL} metalness={0.7} roughness={0.2} />
-        </mesh>
-
-        {/* Voxel Seat Block */}
-        <mesh position={[0, -0.48, 0]} castShadow receiveShadow>
-          <boxGeometry args={[1.25, 0.28, 1.2]} />
-          <meshStandardMaterial color={CHAIR} roughness={0.8} />
-        </mesh>
-        {/* Seat Cushion with diamond cyan piping */}
-        <mesh position={[0, -0.32, 0]}>
-          <boxGeometry args={[1.1, 0.06, 1.05]} />
-          <meshStandardMaterial color={CHAIR_ACCENT} roughness={0.4} />
-        </mesh>
-
-        {/* High-back Ergonomic Throne Rest */}
-        <group position={[0, 0.46, -0.52]} rotation-x={0.08}>
-          <mesh castShadow>
-            <boxGeometry args={[1.2, 1.65, 0.24]} />
-            <meshStandardMaterial color={CHAIR} roughness={0.8} />
-          </mesh>
-          {/* Inner Padded Inlay */}
-          <mesh position={[0, 0.22, 0.13]}>
-            <boxGeometry args={[0.9, 1.05, 0.04]} />
-            <meshStandardMaterial color="#09090b" roughness={0.9} />
-          </mesh>
-          {/* Embedded Glowing Diamond Crest in Headrest */}
-          <mesh position={[0, 0.6, 0.14]}>
-            <octahedronGeometry args={[0.15, 0]} />
-            <meshBasicMaterial color="#00e5ff" toneMapped={false} />
-          </mesh>
-        </group>
-
-        {/* Armrests */}
-        {[-0.68, 0.68].map((x) => (
-          <group key={x} position={[x, -0.1, 0]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.18, 0.18, 0.85]} />
-              <meshStandardMaterial color={CHAIR} roughness={0.8} />
-            </mesh>
-            <mesh position={[0, 0.1, 0]}>
-              <boxGeometry args={[0.16, 0.04, 0.8]} />
-              <meshStandardMaterial color={CHAIR_ACCENT} roughness={0.4} />
-            </mesh>
-          </group>
-        ))}
+        <ErgonomicThrone />
       </group>
 
-      {/* CHARACTER LEGS & SNEAKERS */}
-      {[-0.26, 0.26].map((x) => (
+      {/* LOWER BODY: DENIM JEANS & STYLED SNEAKERS */}
+      {[-0.27, 0.27].map((x) => (
         <group key={x}>
-          {/* Thigh */}
-          <mesh position={[x, -0.3, 0.32]} rotation-x={-0.6} castShadow>
+          {/* Thigh (resting naturally flat on chair cushion) */}
+          <mesh position={[x, -0.28, 0.32]} rotation-x={-0.45} castShadow>
             <boxGeometry args={[0.34, 0.62, 0.34]} />
-            <meshStandardMaterial color="#1e293b" roughness={0.85} />
+            <meshStandardMaterial color={DENIM_COLOR} roughness={0.88} />
           </mesh>
-          {/* Knee Patch */}
-          <mesh position={[x, -0.42, 0.54]} rotation-x={-0.6}>
-            <boxGeometry args={[0.26, 0.2, 0.04]} />
-            <meshStandardMaterial color="#0f172a" roughness={0.9} />
+          {/* Natural Cloth Crease at Knee */}
+          <mesh position={[x, -0.4, 0.52]} rotation-x={-0.45}>
+            <boxGeometry args={[0.32, 0.18, 0.12]} />
+            <meshStandardMaterial color="#171c28" roughness={0.9} />
           </mesh>
-          {/* Shin */}
-          <mesh position={[x, -0.74, 0.68]} rotation-x={0.25} castShadow>
-            <boxGeometry args={[0.32, 0.55, 0.32]} />
-            <meshStandardMaterial color="#1e293b" roughness={0.85} />
+          {/* Shin (angled comfortably toward floor) */}
+          <mesh position={[x, -0.72, 0.64]} rotation-x={0.22} castShadow>
+            <boxGeometry args={[0.31, 0.54, 0.31]} />
+            <meshStandardMaterial color={DENIM_COLOR} roughness={0.88} />
           </mesh>
-          {/* Chunky Voxel Sneaker */}
-          <group position={[x, -1.05, 0.82]}>
-            <mesh castShadow>
-              <boxGeometry args={[0.36, 0.22, 0.48]} />
-              <meshStandardMaterial color="#09090b" roughness={0.6} />
+          {/* Pant Leg Cuff */}
+          <mesh position={[x, -0.96, 0.72]}>
+            <cylinderGeometry args={[0.17, 0.175, 0.08, 16]} />
+            <meshStandardMaterial color="#141824" roughness={0.9} />
+          </mesh>
+
+          {/* Stylized Modern Sneakers (Nike / Retro Runner Style) */}
+          <group position={[x, -1.06, 0.82]}>
+            {/* White Rubber Midsole */}
+            <mesh position={[0, -0.05, 0.04]} castShadow>
+              <boxGeometry args={[0.35, 0.09, 0.54]} />
+              <meshStandardMaterial color={SNEAKER_WHITE} roughness={0.3} />
             </mesh>
-            {/* White Sneaker Sole */}
-            <mesh position={[0, -0.08, 0.02]}>
-              <boxGeometry args={[0.38, 0.07, 0.5]} />
-              <meshStandardMaterial color="#f8fafc" roughness={0.4} />
+            {/* Sneaker Upper Body */}
+            <mesh position={[0, 0.04, 0.02]} castShadow>
+              <boxGeometry args={[0.33, 0.15, 0.5]} />
+              <meshStandardMaterial color={SNEAKER_DARK} roughness={0.65} />
             </mesh>
-            {/* Cyan Accent Stripe */}
-            <mesh position={[0, 0.02, 0.12]}>
-              <boxGeometry args={[0.37, 0.05, 0.12]} />
+            {/* Cyan Accent Swoosh / Stripe */}
+            <mesh position={[x > 0 ? 0.17 : -0.17, 0.03, 0.02]}>
+              <boxGeometry args={[0.015, 0.05, 0.28]} />
               <meshBasicMaterial color="#00e5ff" toneMapped={false} />
+            </mesh>
+            {/* White Laces */}
+            <mesh position={[0, 0.12, 0.08]} rotation-x={-0.3}>
+              <boxGeometry args={[0.18, 0.02, 0.2]} />
+              <meshStandardMaterial color={SNEAKER_WHITE} roughness={0.4} />
             </mesh>
           </group>
         </group>
       ))}
 
-      {/* TORSO / HOODIE */}
+      {/* UPPER BODY: STREETWEAR DEVELOPER HOODIE */}
       <group ref={torso} position={[0, 0.38, 0]}>
-        <mesh castShadow>
-          <boxGeometry args={[0.9, 1.08, 0.48]} />
-          <meshStandardMaterial color={TUNIC} roughness={0.85} />
+        {/* Main Torso Block with Natural Taper */}
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={[0.92, 1.08, 0.52]} />
+          <meshStandardMaterial color={HOODIE_COLOR} roughness={0.85} />
         </mesh>
-        {/* Creeper / Diamond Icon on chest */}
-        <group position={[0, 0.12, 0.25]}>
-          <mesh>
-            <boxGeometry args={[0.28, 0.28, 0.02]} />
-            <meshBasicMaterial color="#00e5ff" toneMapped={false} />
-          </mesh>
-          {/* Creeper Eyes & Mouth Cutout */}
-          <mesh position={[-0.06, 0.05, 0.012]}>
-            <boxGeometry args={[0.06, 0.06, 0.01]} />
-            <meshBasicMaterial color="#042f2e" />
-          </mesh>
-          <mesh position={[0.06, 0.05, 0.012]}>
-            <boxGeometry args={[0.06, 0.06, 0.01]} />
-            <meshBasicMaterial color="#042f2e" />
-          </mesh>
-          <mesh position={[0, -0.04, 0.012]}>
-            <boxGeometry args={[0.08, 0.08, 0.01]} />
-            <meshBasicMaterial color="#042f2e" />
-          </mesh>
-        </group>
-        {/* Dark Hem Trim */}
-        <mesh position={[0, -0.46, 0]}>
-          <boxGeometry args={[0.92, 0.14, 0.5]} />
-          <meshStandardMaterial color={TUNIC_DARK} roughness={0.9} />
+
+        {/* Kangaroo Front Pouch Pocket */}
+        <mesh position={[0, -0.22, 0.28]}>
+          <boxGeometry args={[0.68, 0.32, 0.08]} />
+          <meshStandardMaterial color="#13151b" roughness={0.9} />
         </mesh>
-        {/* Cyber Backpack on back */}
-        <mesh position={[0, 0.06, -0.28]} castShadow>
-          <boxGeometry args={[0.62, 0.75, 0.18]} />
-          <meshStandardMaterial color="#1e293b" roughness={0.7} />
+
+        {/* Draped Hood Volume Resting on Upper Back / Neck */}
+        <mesh position={[0, 0.44, -0.26]} rotation-x={-0.2}>
+          <boxGeometry args={[0.76, 0.28, 0.24]} />
+          <meshStandardMaterial color={HOODIE_COLOR} roughness={0.85} />
         </mesh>
-        {/* Battery LEDs on backpack */}
-        <mesh position={[-0.14, 0.25, -0.38]}>
-          <boxGeometry args={[0.06, 0.06, 0.02]} />
-          <meshBasicMaterial color="#22c55e" toneMapped={false} />
+
+        {/* Ribbed Bottom Hem Band */}
+        <mesh position={[0, -0.52, 0]}>
+          <boxGeometry args={[0.94, 0.12, 0.54]} />
+          <meshStandardMaterial color="#0f1115" roughness={0.95} />
         </mesh>
-        <mesh position={[0, 0.25, -0.38]}>
-          <boxGeometry args={[0.06, 0.06, 0.02]} />
-          <meshBasicMaterial color="#22c55e" toneMapped={false} />
-        </mesh>
-        <mesh position={[0.14, 0.25, -0.38]}>
-          <boxGeometry args={[0.06, 0.06, 0.02]} />
-          <meshBasicMaterial color="#eab308" toneMapped={false} />
+
+        {/* Subtle Cyber Crest on Chest */}
+        <mesh position={[0, 0.18, 0.27]}>
+          <boxGeometry args={[0.22, 0.22, 0.02]} />
+          <meshBasicMaterial color={HOODIE_ACCENT} toneMapped={false} />
         </mesh>
       </group>
 
-      {/* ARMS & FAST-TYPING HANDS */}
+      {/* ARMS (NATURALLY RESTING ON ARMRESTS) */}
       {[-0.58, 0.58].map((x) => (
         <group
           key={x}
           ref={x < 0 ? leftArm : rightArm}
-          position={[x, 0.78, 0.18]}
-          rotation-x={-0.85}
-          rotation-z={x > 0 ? -0.15 : 0.15}
+          position={[x, 0.78, 0.14]}
+          rotation-x={-0.78}
+          rotation-z={x > 0 ? -0.12 : 0.12}
         >
-          {/* Upper Arm / Shoulder */}
-          <mesh position={[0, -0.3, 0]} castShadow>
-            <boxGeometry args={[0.28, 0.65, 0.28]} />
-            <meshStandardMaterial color={TUNIC} roughness={0.85} />
+          {/* Upper Arm with Realistic Shoulder Curve */}
+          <mesh position={[0, -0.32, 0]} castShadow>
+            <boxGeometry args={[0.27, 0.68, 0.27]} />
+            <meshStandardMaterial color={HOODIE_COLOR} roughness={0.85} />
           </mesh>
-          {/* Forearm skin / cuff */}
-          <mesh position={[0, -0.65, 0.04]} rotation-x={0.35} castShadow>
-            <boxGeometry args={[0.26, 0.45, 0.26]} />
-            <meshStandardMaterial color={SKIN_SHADOW} roughness={0.8} />
+          {/* Forearm angled comfortably toward keyboard */}
+          <mesh position={[0, -0.68, 0.06]} rotation-x={0.28} castShadow>
+            <boxGeometry args={[0.25, 0.48, 0.25]} />
+            <meshStandardMaterial color={HOODIE_COLOR} roughness={0.85} />
+          </mesh>
+          {/* Ribbed Sleeve Cuff */}
+          <mesh position={[0, -0.92, 0.14]}>
+            <boxGeometry args={[0.26, 0.08, 0.26]} />
+            <meshStandardMaterial color="#0f1115" roughness={0.9} />
           </mesh>
         </group>
       ))}
 
-      {/* Dynamic Typing Hands */}
-      <mesh ref={leftHand} position={[-0.32, 0.72, 0.68]} castShadow>
-        <boxGeometry args={[0.22, 0.18, 0.22]} />
-        <meshStandardMaterial color={SKIN} roughness={0.75} />
-      </mesh>
-      <mesh ref={rightHand} position={[0.32, 0.72, 0.68]} castShadow>
-        <boxGeometry args={[0.22, 0.18, 0.22]} />
-        <meshStandardMaterial color={SKIN} roughness={0.75} />
-      </mesh>
+      {/* ARTICULATED REALISTIC HANDS & FINGERS (TYPING ON KEYBOARD) */}
+      {[-0.32, 0.32].map((x) => (
+        <group
+          key={x}
+          ref={x < 0 ? leftHand : rightHand}
+          position={[x, 0.71, 0.72]}
+          rotation-x={-0.2}
+          rotation-z={x > 0 ? -0.08 : 0.08}
+        >
+          {/* Palm Base */}
+          <mesh castShadow>
+            <boxGeometry args={[0.22, 0.07, 0.2]} />
+            <meshStandardMaterial color={SKIN_TONE} roughness={0.65} />
+          </mesh>
+          {/* Thumb */}
+          <mesh position={[x > 0 ? -0.12 : 0.12, -0.01, 0.04]} rotation-y={x > 0 ? 0.3 : -0.3}>
+            <boxGeometry args={[0.07, 0.06, 0.14]} />
+            <meshStandardMaterial color={SKIN_TONE} roughness={0.65} />
+          </mesh>
+          {/* 4 Articulated Fingers poised over keys */}
+          {[-0.07, -0.02, 0.03, 0.08].map((fx, fIdx) => (
+            <mesh
+              key={fIdx}
+              position={[fx, -0.02, 0.13]}
+              rotation-x={0.22}
+            >
+              <boxGeometry args={[0.045, 0.05, 0.13]} />
+              <meshStandardMaterial color={SKIN_SHADOW} roughness={0.65} />
+            </mesh>
+          ))}
+        </group>
+      ))}
 
-      {/* DETAILED VOXEL HEAD (STEVE PROPORTIONS + GAMING HEADSET) */}
-      <group ref={head} position={[0, 1.34, 0.02]}>
-        {/* Skin Head Cube */}
+      {/* SCULPTED REALISTIC HEAD & PREMIUM HEADPHONES */}
+      <group ref={head} position={[0, 1.32, 0.02]}>
+        {/* Anatomical Head Contour (Jawline & Cranium) */}
         <mesh castShadow>
-          <boxGeometry args={[0.78, 0.78, 0.78]} />
-          <meshStandardMaterial color={SKIN} roughness={0.75} />
+          <boxGeometry args={[0.72, 0.78, 0.72]} />
+          <meshStandardMaterial color={SKIN_TONE} roughness={0.65} />
+        </mesh>
+        {/* Chin & Jaw Taper */}
+        <mesh position={[0, -0.34, 0.12]} rotation-x={0.2}>
+          <boxGeometry args={[0.48, 0.18, 0.44]} />
+          <meshStandardMaterial color={SKIN_SHADOW} roughness={0.7} />
+        </mesh>
+        {/* Sculpted Nose Bridge */}
+        <mesh position={[0, -0.04, 0.38]} rotation-x={-0.1}>
+          <boxGeometry args={[0.11, 0.18, 0.09]} />
+          <meshStandardMaterial color={SKIN_SHADOW} roughness={0.6} />
+        </mesh>
+        {/* Realistic Lips / Focused Expression */}
+        <mesh position={[0, -0.22, 0.37]}>
+          <boxGeometry args={[0.22, 0.05, 0.04]} />
+          <meshStandardMaterial color="#be7c60" roughness={0.6} />
         </mesh>
 
-        {/* Stepped 3D Hair Cap */}
-        <mesh position={[0, 0.18, -0.04]} castShadow>
-          <boxGeometry args={[0.84, 0.52, 0.84]} />
-          <meshStandardMaterial color={HAIR} roughness={0.95} />
-        </mesh>
-        {/* Hair Fringe Front */}
-        <mesh position={[0, 0.38, 0.38]}>
-          <boxGeometry args={[0.8, 0.18, 0.08]} />
-          <meshStandardMaterial color={HAIR} roughness={0.95} />
-        </mesh>
-        {/* Hair Sideburns */}
-        {[-0.41, 0.41].map((x) => (
-          <mesh key={x} position={[x, 0.15, 0.12]}>
-            <boxGeometry args={[0.04, 0.35, 0.3]} />
-            <meshStandardMaterial color={HAIR} roughness={0.95} />
+        {/* Sculpted Ears */}
+        {[-0.38, 0.38].map((x) => (
+          <mesh key={x} position={[x, -0.02, 0.04]}>
+            <boxGeometry args={[0.05, 0.22, 0.14]} />
+            <meshStandardMaterial color={SKIN_SHADOW} roughness={0.7} />
           </mesh>
         ))}
 
-        {/* Blinking Pixel Eyes */}
-        {[-0.18, 0.18].map((x) => (
-          <group key={x} ref={x < 0 ? leftEye : rightEye} position={[x, 0.04, 0.4]}>
-            {/* White Sclera */}
+        {/* Expressive Eyes with Eyelids & Screen Reflections */}
+        {[-0.17, 0.17].map((x) => (
+          <group
+            key={x}
+            ref={x < 0 ? leftEye : rightEye}
+            position={[x, 0.06, 0.37]}
+          >
+            {/* Almond Sclera */}
             <mesh>
-              <boxGeometry args={[0.13, 0.1, 0.02]} />
+              <boxGeometry args={[0.13, 0.08, 0.02]} />
               <meshBasicMaterial color="#ffffff" />
             </mesh>
-            {/* Glowing Cyan Pupil */}
-            <mesh position={[x > 0 ? 0.025 : -0.025, -0.01, 0.01]}>
-              <boxGeometry args={[0.07, 0.08, 0.02]} />
+            {/* Dark Iris with Screen Reflection */}
+            <mesh position={[x > 0 ? 0.02 : -0.02, -0.01, 0.01]}>
+              <boxGeometry args={[0.075, 0.07, 0.02]} />
+              <meshBasicMaterial color="#00e5ff" toneMapped={false} />
+            </mesh>
+            {/* Upper Eyelid Crease */}
+            <mesh position={[0, 0.048, 0.012]}>
+              <boxGeometry args={[0.14, 0.02, 0.02]} />
+              <meshStandardMaterial color={SKIN_SHADOW} roughness={0.7} />
+            </mesh>
+          </group>
+        ))}
+
+        {/* Natural Eyebrows */}
+        {[-0.17, 0.17].map((x) => (
+          <mesh key={x} position={[x, 0.15, 0.38]}>
+            <boxGeometry args={[0.15, 0.04, 0.02]} />
+            <meshStandardMaterial color={HAIR_COLOR} roughness={0.9} />
+          </mesh>
+        ))}
+
+        {/* STYLISH TEXTURED HAIR HELMET WITH SWEPT BANGS */}
+        {/* Hair Cap */}
+        <mesh position={[0, 0.22, -0.04]} castShadow>
+          <boxGeometry args={[0.78, 0.48, 0.78]} />
+          <meshStandardMaterial color={HAIR_COLOR} roughness={0.8} />
+        </mesh>
+        {/* Swept Bangs & Textured Fringe */}
+        <mesh position={[0, 0.36, 0.36]} rotation-x={-0.15}>
+          <boxGeometry args={[0.74, 0.22, 0.12]} />
+          <meshStandardMaterial color={HAIR_COLOR} roughness={0.8} />
+        </mesh>
+        {/* Side Hair Strands */}
+        {[-0.39, 0.39].map((x) => (
+          <mesh key={x} position={[x, 0.18, 0.16]}>
+            <boxGeometry args={[0.05, 0.34, 0.28]} />
+            <meshStandardMaterial color={HAIR_COLOR} roughness={0.8} />
+          </mesh>
+        ))}
+
+        {/* PREMIUM STUDIO OVER-EAR HEADPHONES (Sony XM5 / Bose Style) */}
+        {/* Sleek Curved Headband */}
+        <mesh position={[0, 0.46, 0]}>
+          <boxGeometry args={[0.84, 0.08, 0.16]} />
+          <meshStandardMaterial color="#090b0e" roughness={0.4} metalness={0.6} />
+        </mesh>
+        <mesh position={[0, 0.42, 0]}>
+          <boxGeometry args={[0.76, 0.04, 0.14]} />
+          <meshStandardMaterial color="#1a1f29" roughness={0.8} />
+        </mesh>
+
+        {/* Angled Oval Earcups with Plush Cushions & Glowing LED Rings */}
+        {[-0.42, 0.42].map((x) => (
+          <group key={x} position={[x, 0.02, 0]}>
+            {/* Earcup Shell */}
+            <mesh castShadow>
+              <boxGeometry args={[0.12, 0.36, 0.28]} />
+              <meshStandardMaterial color="#141822" roughness={0.35} metalness={0.7} />
+            </mesh>
+            {/* Plush Leatherette Cushion */}
+            <mesh position={[x > 0 ? -0.05 : 0.05, 0, 0]}>
+              <boxGeometry args={[0.04, 0.32, 0.24]} />
+              <meshStandardMaterial color="#090b0e" roughness={0.85} />
+            </mesh>
+            {/* Glowing Accent LED Ring */}
+            <mesh position={[x > 0 ? 0.065 : -0.065, 0, 0]}>
+              <boxGeometry args={[0.015, 0.2, 0.16]} />
               <meshBasicMaterial color="#00e5ff" toneMapped={false} />
             </mesh>
           </group>
         ))}
 
-        {/* Brown Eyebrows */}
-        {[-0.18, 0.18].map((x) => (
-          <mesh key={x} position={[x, 0.14, 0.4]}>
-            <boxGeometry args={[0.14, 0.04, 0.02]} />
-            <meshStandardMaterial color="#451a03" roughness={0.9} />
-          </mesh>
-        ))}
-
-        {/* Confident Smile / Mouth */}
-        <mesh position={[0, -0.16, 0.4]}>
-          <boxGeometry args={[0.22, 0.05, 0.02]} />
-          <meshStandardMaterial color="#b45309" roughness={0.8} />
-        </mesh>
-
-        {/* CHUNKY GAMING HEADSET */}
-        {/* Headband */}
-        <mesh position={[0, 0.46, 0]}>
-          <boxGeometry args={[0.88, 0.1, 0.22]} />
-          <meshStandardMaterial color="#09090b" roughness={0.5} />
-        </mesh>
-        <mesh position={[0, 0.47, 0]}>
-          <boxGeometry args={[0.74, 0.09, 0.12]} />
-          <meshBasicMaterial color="#00e5ff" toneMapped={false} />
-        </mesh>
-        {/* Large Earcups with glowing RGB rings */}
-        {[-0.43, 0.43].map((x) => (
-          <group key={x} position={[x, 0.04, 0]}>
-            {/* Earcup Cushion */}
-            <mesh>
-              <boxGeometry args={[0.12, 0.34, 0.34]} />
-              <meshStandardMaterial color="#09090b" roughness={0.5} />
-            </mesh>
-            {/* Glowing Ring */}
-            <mesh position={[x > 0 ? 0.065 : -0.065, 0, 0]}>
-              <boxGeometry args={[0.02, 0.22, 0.22]} />
-              <meshBasicMaterial color="#ef4444" toneMapped={false} />
-            </mesh>
-          </group>
-        ))}
-        {/* Swiveling Boom Mic */}
-        <group position={[-0.44, -0.04, 0.15]} rotation={[0.45, -0.4, 0]}>
+        {/* Sleek Boom Microphone */}
+        <group position={[-0.44, -0.08, 0.18]} rotation={[0.42, -0.38, 0]}>
           <mesh position={[0, 0, 0.18]}>
-            <boxGeometry args={[0.04, 0.04, 0.32]} />
-            <meshStandardMaterial color="#27272a" roughness={0.5} />
+            <cylinderGeometry args={[0.018, 0.018, 0.36, 8]} />
+            <meshStandardMaterial color="#1e232e" metalness={0.8} roughness={0.2} />
           </mesh>
-          {/* Red Recording LED Tip */}
+          {/* Glowing Red Recording Indicator LED */}
           <mesh position={[0, 0, 0.36]}>
-            <boxGeometry args={[0.07, 0.07, 0.08]} />
+            <boxGeometry args={[0.05, 0.05, 0.06]} />
             <meshBasicMaterial color="#ef4444" toneMapped={false} />
           </mesh>
-          <pointLight color="#ef4444" distance={1.2} intensity={1.5} />
+          <pointLight color="#ef4444" distance={1.2} intensity={1.2} />
         </group>
       </group>
 
-      {/* FLOATING VOXEL LAPTOP + SCREEN GLOW + HOLOGRAPHIC PARTICLES */}
-      <group ref={laptop} position={[0, 0.62, 0.86]}>
-        {/* Base Keyboard Body */}
-        <mesh rotation-x={-0.14} castShadow>
-          <boxGeometry args={[1.08, 0.06, 0.78]} />
-          <meshStandardMaterial color="#334155" roughness={0.35} metalness={0.5} />
-        </mesh>
-        {/* Glowing Keyboard Keys Plate */}
-        <mesh position={[0, 0.038, 0.02]} rotation-x={-0.14}>
-          <boxGeometry args={[0.98, 0.02, 0.66]} />
-          <meshStandardMaterial color="#0f172a" roughness={0.6} />
-        </mesh>
-        {/* Keycap Glow Accents */}
-        <mesh position={[0, 0.048, 0.02]} rotation-x={-0.14}>
-          <boxGeometry args={[0.92, 0.01, 0.6]} />
-          <meshBasicMaterial color="#00e5ff" transparent opacity={0.35} />
-        </mesh>
-
-        {/* Display Screen */}
-        <group position={[0, 0.4, -0.34]} rotation-x={-0.26}>
-          <mesh castShadow>
-            <boxGeometry args={[1.08, 0.74, 0.05]} />
-            <meshStandardMaterial color="#334155" roughness={0.35} metalness={0.5} />
-          </mesh>
-          {/* Glowing Code Screen */}
-          <mesh position={[0, 0, 0.032]}>
-            <boxGeometry args={[0.98, 0.64, 0.01]} />
-            <meshBasicMaterial color="#00f5d4" toneMapped={false} />
-          </mesh>
-          {/* Animated Syntax Code Lines */}
-          {[0.2, 0.09, -0.02, -0.13, -0.22].map((y, i) => (
-            <mesh key={y} position={[-0.2 + (i % 2) * 0.06, y, 0.038]}>
-              <boxGeometry args={[0.48 - (i % 3) * 0.08, 0.035, 0.01]} />
-              <meshBasicMaterial color="#042f2e" toneMapped={false} />
-            </mesh>
-          ))}
-        </group>
-
-        {/* Dynamic Screen Glow Light casting on programmer's face & chest */}
-        <pointLight
-          ref={screenLight}
-          position={[0, 0.35, 0.1]}
-          color="#00f5d4"
-          distance={3.2}
-          intensity={2.8}
-        />
-
-        {/* Floating Holographic Particles rising from the screen */}
-        <HoloCode />
-      </group>
+      {/* REALISTIC WORKSTATION LAPTOP & SCREEN GLOW */}
+      <RealisticLaptop lightRef={screenLight} />
     </group>
   );
 }

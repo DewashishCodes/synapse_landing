@@ -237,10 +237,10 @@ export function Overlay() {
             <span className="text-[9px] text-emerald-300 font-mono">AI EXP</span>
           </div>
 
-          {/* 5 Hunger Drumsticks */}
-          <div className="flex items-center gap-1 text-amber-500 filter drop-shadow-[0_0_6px_rgba(245,158,11,0.6)]">
-            <span className="text-sm">🍗🍗🍗🍗🍗</span>
-            <span className="text-[10px] text-amber-300/90 font-mono tracking-normal">FULL</span>
+          {/* Sprint Energy / Stamina */}
+          <div className="flex items-center gap-1.5 text-cyan-400 filter drop-shadow-[0_0_6px_rgba(0,229,255,0.6)]">
+            <span className="text-xs">⚡⚡⚡⚡⚡</span>
+            <span className="text-[10px] text-cyan-300/90 font-mono tracking-normal">100% SPRINT</span>
           </div>
         </div>
 
