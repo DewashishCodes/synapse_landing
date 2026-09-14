@@ -10,6 +10,11 @@ import {
   VoxelCloud,
   VoxelIsland,
   VoxelTorch,
+  VoxelTree,
+  VoxelMushroom,
+  VoxelDiamondSword,
+  VoxelEnchantingTable,
+  VoxelTNT,
   XPOrb,
   type BlockType,
   PALETTE,
@@ -30,29 +35,69 @@ function pathAt(p: number) {
 function Rig() {
   const chair = useRef<THREE.Group>(null);
   const smooth = useRef(0);
+  const prevP = useRef(0);
+  const smoothVel = useRef(0);
   const target = useMemo(() => new THREE.Vector3(), []);
   const camPos = useMemo(() => new THREE.Vector3(0, 3, 12), []);
 
   useFrame(({ camera }, delta) => {
     const dt = Math.min(delta, 0.05);
-    smooth.current += (scrollRef.current - smooth.current) * (1 - Math.exp(-6 * dt));
+    // Smooth scroll progress interpolation
+    smooth.current += (scrollRef.current - smooth.current) * (1 - Math.exp(-7 * dt));
     const p = smooth.current;
+
+    // Calculate signed velocity for dynamic banking & inertia
+    const instVel = (p - prevP.current) / Math.max(dt, 0.001);
+    prevP.current = p;
+    smoothVel.current += (instVel - smoothVel.current) * (1 - Math.exp(-9 * dt));
+    const vel = smoothVel.current;
+
     const pos = pathAt(p);
+    const nextPos = pathAt(Math.min(1, p + 0.004));
+    const tangent = nextPos.clone().sub(pos).normalize();
 
     // Smoothly shift coder to the right in the starting scene so hero text is completely visible
     const startFade = Math.max(0, 1 - p * 6);
     const startEase = startFade * startFade * (3 - 2 * startFade);
     const startOffsetX = startEase * 4.6;
 
+    // Kenney-style dynamic banking physics:
+    // Curvature in XZ plane for banking into curves
+    const d2x = -Math.sin(p * Math.PI * 5.5 + 0.85);
+    const rollTarget = d2x * 0.28 - THREE.MathUtils.clamp(vel * 0.12, -0.25, 0.25);
+    const pitchTarget = 0.06 + THREE.MathUtils.clamp(vel * 0.35, -0.15, 0.4);
+    const yawTarget = Math.sin(p * Math.PI * 5.5 + 0.85) * 0.85 + p * 1.35;
+
     if (chair.current) {
       chair.current.position.set(pos.x + startOffsetX, pos.y, pos.z);
-      chair.current.rotation.y = Math.sin(p * Math.PI * 5.5 + 0.85) * 0.9 + p * 1.2;
-      chair.current.rotation.z = -Math.cos(p * Math.PI * 5.5 + 0.85) * 0.12;
+      // Smoothly bank into curves & pitch with descent velocity
+      chair.current.rotation.x = THREE.MathUtils.lerp(
+        chair.current.rotation.x,
+        pitchTarget,
+        1 - Math.exp(-10 * dt),
+      );
+      chair.current.rotation.y = THREE.MathUtils.lerp(
+        chair.current.rotation.y,
+        yawTarget,
+        1 - Math.exp(-10 * dt),
+      );
+      chair.current.rotation.z = THREE.MathUtils.lerp(
+        chair.current.rotation.z,
+        rollTarget,
+        1 - Math.exp(-10 * dt),
+      );
     }
 
-    camPos.set(pos.x * 0.45, pos.y + 2.4, pos.z + 11 - Math.sin(p * Math.PI) * 1.5);
-    camera.position.lerp(camPos, 1 - Math.exp(-5 * dt));
-    target.set(pos.x * 0.7, pos.y + 0.4, pos.z);
+    // Dynamic Camera Tracking with speed zoom
+    const speedZoom = THREE.MathUtils.clamp(Math.abs(vel) * 1.6, 0, 2.5);
+    camPos.set(
+      pos.x * 0.45 + (1 - startFade) * 0.3,
+      pos.y + 2.4 - vel * 0.35,
+      pos.z + 11 - Math.sin(p * Math.PI) * 1.5 + speedZoom,
+    );
+    camera.position.lerp(camPos, 1 - Math.exp(-6 * dt));
+
+    target.set(pos.x * 0.7 + startOffsetX * 0.25, pos.y + 0.4, pos.z);
     camera.lookAt(target);
   });
 
@@ -186,6 +231,14 @@ function World() {
       <VoxelIsland position={[8.5, -40, -3]} scale={1.15} />
       <VoxelIsland position={[-8.0, -52, -4]} scale={1.1} />
       <VoxelIsland position={[7.5, -65, -2]} scale={1.2} />
+
+      {/* Iconic Minecraft Props on Islands */}
+      <VoxelTree position={[-8.2, -8.7, -3.2]} scale={1.05} />
+      <VoxelDiamondSword position={[8.2, -17.8, -3.8]} scale={1.1} />
+      <VoxelEnchantingTable position={[-7.8, -27.8, -2.0]} scale={1.15} />
+      <VoxelMushroom position={[8.2, -39.8, -3.2]} scale={1.2} />
+      <VoxelTNT position={[9.4, -39.6, -2.2]} scale={0.8} />
+      <VoxelTree position={[-8.0, -51.7, -4.0]} scale={1.1} />
 
       {/* Flickering Voxel Torches on Islands */}
       <VoxelTorch position={[-6.8, -7.8, -2.5]} />

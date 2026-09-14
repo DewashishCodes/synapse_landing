@@ -217,6 +217,33 @@ export function Overlay() {
           <span>WORLD: SIT PUNE · DIFFICULTY: 8-HR SPRINT · MODE: OFFLINE</span>
         </div>
 
+        {/* MINECRAFT HUD STATUS: HEARTS, LEVEL BAR, HUNGER */}
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-hud select-none">
+          {/* 10 Red Hearts */}
+          <div className="flex items-center gap-1 text-red-500 filter drop-shadow-[0_0_6px_rgba(239,68,68,0.7)]">
+            <span className="text-sm">♥♥♥♥♥</span>
+            <span className="text-[10px] text-red-400/90 font-mono tracking-normal">20/20 HP</span>
+          </div>
+
+          {/* Green Minecraft XP Level & Bar */}
+          <div className="flex items-center gap-2 px-2.5 py-1 bg-stone-950/80 border border-emerald-500/60 shadow-[0_0_10px_rgba(80,250,123,0.2)]">
+            <span className="text-emerald-400 font-bold text-xs tracking-wider">LVL 99</span>
+            <div className="w-16 sm:w-24 h-1.5 bg-stone-900 border border-emerald-900 overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-emerald-500 to-emerald-300 shadow-[0_0_8px_#50fa7b]"
+                style={{ width: "85%" }}
+              />
+            </div>
+            <span className="text-[9px] text-emerald-300 font-mono">AI EXP</span>
+          </div>
+
+          {/* 5 Hunger Drumsticks */}
+          <div className="flex items-center gap-1 text-amber-500 filter drop-shadow-[0_0_6px_rgba(245,158,11,0.6)]">
+            <span className="text-sm">🍗🍗🍗🍗🍗</span>
+            <span className="text-[10px] text-amber-300/90 font-mono tracking-normal">FULL</span>
+          </div>
+        </div>
+
         <h1 className="hero-title mt-6">
           SYNAPSE
           <br />
@@ -617,6 +644,58 @@ export function Overlay() {
           </div>
         </Panel>
       </section>
+
+      {/* MINECRAFT INVENTORY HOTBAR (QUICK NAVIGATION HUD) */}
+      <aside
+        aria-label="Quick Navigation Hotbar"
+        className="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-40 pointer-events-auto select-none"
+      >
+        <div className="minecraft-hotbar">
+          {[
+            { slot: "1", icon: "⚔️", label: "Overview", href: "#overview" },
+            { slot: "2", icon: "🗺️", label: "Tracks", href: "#tracks" },
+            { slot: "3", icon: "📜", label: "Timeline", href: "#timeline" },
+            { slot: "4", icon: "🛡️", label: "Team Rules", href: "#details" },
+            { slot: "5", icon: "🏆", label: "Prizes", href: "#prizes" },
+            { slot: "6", icon: "🏛️", label: "Sponsors", href: "#sponsors" },
+            { slot: "7", icon: "👥", label: "The Team", href: "/team", isRouter: true },
+            {
+              slot: "8",
+              icon: "💎",
+              label: "Register",
+              href: UNSTOP_REGISTER_URL,
+              isExternal: true,
+            },
+          ].map((item) =>
+            item.isRouter ? (
+              <Link
+                key={item.slot}
+                to={item.href}
+                className="minecraft-hotbar-slot group"
+                title={`${item.label} (Press ${item.slot})`}
+              >
+                <span className="absolute top-0.5 left-1 text-[8px] font-hud text-foreground/40 group-hover:text-cyan-300">
+                  {item.slot}
+                </span>
+                <span className="text-sm sm:text-base">{item.icon}</span>
+              </Link>
+            ) : (
+              <a
+                key={item.slot}
+                href={item.href}
+                {...(item.isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
+                className="minecraft-hotbar-slot group"
+                title={`${item.label} (Press ${item.slot})`}
+              >
+                <span className="absolute top-0.5 left-1 text-[8px] font-hud text-foreground/40 group-hover:text-cyan-300">
+                  {item.slot}
+                </span>
+                <span className="text-sm sm:text-base">{item.icon}</span>
+              </a>
+            ),
+          )}
+        </div>
+      </aside>
     </main>
   );
 }

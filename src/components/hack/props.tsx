@@ -340,6 +340,291 @@ export function XPOrb({ position }: { position: [number, number, number] }) {
   );
 }
 
+/**
+ * Voxel Minecraft Oak Tree with wood trunk and stepped leaf canopy layers.
+ */
+export function VoxelTree({
+  position,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  scale?: number;
+}) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Oak Log Trunk */}
+      <mesh position={[0, 1.1, 0]} castShadow>
+        <boxGeometry args={[0.55, 2.2, 0.55]} />
+        <meshStandardMaterial color="#5c3a21" roughness={0.9} />
+      </mesh>
+      {/* Lower Leaf Canopy */}
+      <mesh position={[0, 2.3, 0]} castShadow receiveShadow>
+        <boxGeometry args={[2.5, 1.1, 2.5]} />
+        <meshStandardMaterial color="#166534" roughness={0.8} />
+      </mesh>
+      {/* Mid Leaf Layer */}
+      <mesh position={[0, 3.1, 0]} castShadow receiveShadow>
+        <boxGeometry args={[2.0, 0.9, 2.0]} />
+        <meshStandardMaterial color="#22c55e" roughness={0.75} />
+      </mesh>
+      {/* Top Leaf Crown */}
+      <mesh position={[0, 3.75, 0]} castShadow>
+        <boxGeometry args={[1.3, 0.7, 1.3]} />
+        <meshStandardMaterial color="#4ade80" roughness={0.7} />
+      </mesh>
+      {/* Hanging Golden Apple */}
+      <group position={[0.85, 1.65, 0.85]}>
+        <mesh castShadow>
+          <boxGeometry args={[0.24, 0.26, 0.24]} />
+          <meshStandardMaterial color="#f59e0b" roughness={0.3} metalness={0.6} />
+        </mesh>
+        <pointLight color="#fbbf24" distance={2.5} intensity={2} />
+      </group>
+    </group>
+  );
+}
+
+/**
+ * Giant Minecraft Red Mushroom with white spots and glowing spores.
+ */
+export function VoxelMushroom({
+  position,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  scale?: number;
+}) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Stalk */}
+      <mesh position={[0, 0.9, 0]} castShadow>
+        <boxGeometry args={[0.5, 1.8, 0.5]} />
+        <meshStandardMaterial color="#f1f5f9" roughness={0.9} />
+      </mesh>
+      {/* Red Cap */}
+      <mesh position={[0, 1.9, 0]} castShadow receiveShadow>
+        <boxGeometry args={[2.2, 0.9, 2.2]} />
+        <meshStandardMaterial color="#dc2626" roughness={0.8} />
+      </mesh>
+      {/* White Spots on Cap */}
+      {[
+        [0.6, 2.36, 0.5],
+        [-0.5, 2.36, -0.6],
+        [-0.6, 2.36, 0.5],
+        [0.5, 2.36, -0.5],
+        [1.11, 1.9, 0],
+        [-1.11, 1.9, 0],
+        [0, 1.9, 1.11],
+        [0, 1.9, -1.11],
+      ].map(([x, y, z], i) => (
+        <mesh key={i} position={[x as number, y as number, z as number]}>
+          <boxGeometry args={[0.3, 0.02, 0.3]} />
+          <meshStandardMaterial color="#ffffff" roughness={0.6} />
+        </mesh>
+      ))}
+      <pointLight color="#ef4444" distance={3} intensity={2.2} />
+    </group>
+  );
+}
+
+/**
+ * Enchanted Voxel Diamond Sword embedded in an ancient stone pedestal with sparkling glint.
+ */
+export function VoxelDiamondSword({
+  position,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  scale?: number;
+}) {
+  const glintRef = useRef<THREE.PointLight>(null);
+  const sparkRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (glintRef.current) glintRef.current.intensity = 3 + Math.sin(t * 8) * 1.5;
+    if (sparkRef.current) sparkRef.current.rotation.y = t * 1.5;
+  });
+
+  return (
+    <group position={position} scale={scale}>
+      {/* Pedestal Base */}
+      <mesh position={[0, 0.35, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.3, 0.7, 1.3]} />
+        <meshStandardMaterial color="#1e1e24" roughness={0.9} />
+      </mesh>
+      {/* Diamond Inlay */}
+      <mesh position={[0, 0.71, 0]}>
+        <boxGeometry args={[0.8, 0.04, 0.8]} />
+        <meshBasicMaterial color="#00f5d4" toneMapped={false} />
+      </mesh>
+
+      {/* Embedded Sword angled into pedestal */}
+      <group position={[0, 0.7, 0]} rotation={[0.25, 0.4, 0.15]}>
+        {/* Blade */}
+        <mesh position={[0, 1.0, 0]} castShadow>
+          <boxGeometry args={[0.22, 1.4, 0.08]} />
+          <meshStandardMaterial color="#00e5ff" roughness={0.2} metalness={0.8} />
+        </mesh>
+        {/* Diamond Edge Glow */}
+        <mesh position={[0, 1.0, 0]}>
+          <boxGeometry args={[0.26, 1.36, 0.06]} />
+          <meshBasicMaterial color="#5ffbf1" toneMapped={false} />
+        </mesh>
+        {/* Guard */}
+        <mesh position={[0, 0.28, 0]} castShadow>
+          <boxGeometry args={[0.65, 0.12, 0.14]} />
+          <meshStandardMaterial color="#0f172a" roughness={0.4} metalness={0.7} />
+        </mesh>
+        {/* Guard Diamond gems */}
+        {[-0.28, 0.28].map((x) => (
+          <mesh key={x} position={[x, 0.28, 0]}>
+            <boxGeometry args={[0.08, 0.08, 0.16]} />
+            <meshBasicMaterial color="#00f5d4" toneMapped={false} />
+          </mesh>
+        ))}
+        {/* Hilt */}
+        <mesh position={[0, -0.05, 0]} castShadow>
+          <boxGeometry args={[0.12, 0.45, 0.12]} />
+          <meshStandardMaterial color="#5c3a21" roughness={0.8} />
+        </mesh>
+        {/* Pommel */}
+        <mesh position={[0, -0.3, 0]}>
+          <boxGeometry args={[0.2, 0.12, 0.16]} />
+          <meshStandardMaterial color="#fbbf24" roughness={0.3} metalness={0.9} />
+        </mesh>
+      </group>
+
+      {/* Orbiting Enchantment Sparkles */}
+      <group ref={sparkRef} position={[0, 1.6, 0]}>
+        {[0, (2 * Math.PI) / 3, (4 * Math.PI) / 3].map((angle, i) => (
+          <mesh
+            key={i}
+            position={[Math.cos(angle) * 0.7, Math.sin(i) * 0.3, Math.sin(angle) * 0.7]}
+          >
+            <octahedronGeometry args={[0.08, 0]} />
+            <meshBasicMaterial color="#a855f7" toneMapped={false} />
+          </mesh>
+        ))}
+      </group>
+      <pointLight ref={glintRef} color="#00e5ff" distance={4.5} intensity={3} />
+    </group>
+  );
+}
+
+/**
+ * Enchanting Table with rotating floating spellbook and purple arcane particles.
+ */
+export function VoxelEnchantingTable({
+  position,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  scale?: number;
+}) {
+  const bookRef = useRef<THREE.Group>(null);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    if (bookRef.current) {
+      bookRef.current.rotation.y = t * 0.9;
+      bookRef.current.position.y = 1.15 + Math.sin(t * 2.5) * 0.08;
+      bookRef.current.rotation.x = Math.sin(t * 1.5) * 0.1;
+    }
+  });
+
+  return (
+    <group position={position} scale={scale}>
+      {/* Obsidian Base */}
+      <mesh position={[0, 0.35, 0]} castShadow receiveShadow>
+        <boxGeometry args={[1.5, 0.7, 1.5]} />
+        <meshStandardMaterial color="#161226" roughness={0.6} metalness={0.3} />
+      </mesh>
+      {/* Red Carpet / Cloth */}
+      <mesh position={[0, 0.71, 0]}>
+        <boxGeometry args={[1.3, 0.04, 1.3]} />
+        <meshStandardMaterial color="#991b1b" roughness={0.9} />
+      </mesh>
+      {/* 4 Diamond Corners */}
+      {[
+        [-0.55, 0.55],
+        [0.55, 0.55],
+        [-0.55, -0.55],
+        [0.55, -0.55],
+      ].map(([x, z], i) => (
+        <mesh key={i} position={[x, 0.52, z]}>
+          <boxGeometry args={[0.25, 0.4, 0.25]} />
+          <meshBasicMaterial color="#00f5d4" toneMapped={false} />
+        </mesh>
+      ))}
+
+      {/* Floating Animated Spellbook */}
+      <group ref={bookRef} position={[0, 1.15, 0]}>
+        {/* Leather Cover */}
+        <mesh rotation-z={0.2} castShadow>
+          <boxGeometry args={[0.42, 0.04, 0.55]} />
+          <meshStandardMaterial color="#78350f" roughness={0.7} />
+        </mesh>
+        <mesh rotation-z={-0.2} castShadow>
+          <boxGeometry args={[0.42, 0.04, 0.55]} />
+          <meshStandardMaterial color="#78350f" roughness={0.7} />
+        </mesh>
+        {/* Pages */}
+        <mesh position={[0, 0.04, 0]}>
+          <boxGeometry args={[0.38, 0.06, 0.5]} />
+          <meshBasicMaterial color="#fef08a" toneMapped={false} />
+        </mesh>
+        <pointLight color="#c084fc" distance={3.5} intensity={3.5} />
+      </group>
+    </group>
+  );
+}
+
+/**
+ * Classic Minecraft TNT Block with white middle label and top fuse.
+ */
+export function VoxelTNT({
+  position,
+  scale = 1,
+}: {
+  position: [number, number, number];
+  scale?: number;
+}) {
+  return (
+    <group position={position} scale={scale}>
+      {/* Red Body */}
+      <mesh castShadow receiveShadow>
+        <boxGeometry args={[1.35, 1.35, 1.35]} />
+        <meshStandardMaterial color="#dc2626" roughness={0.7} />
+      </mesh>
+      {/* White Middle Band */}
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[1.37, 0.45, 1.37]} />
+        <meshStandardMaterial color="#f8fafc" roughness={0.8} />
+      </mesh>
+      {/* "TNT" Black blocky text bars on 4 sides */}
+      {[-0.69, 0.69].map((x) => (
+        <mesh key={`tnt-x-${x}`} position={[x, 0, 0]}>
+          <boxGeometry args={[0.01, 0.28, 0.8]} />
+          <meshBasicMaterial color="#0f172a" />
+        </mesh>
+      ))}
+      {[-0.69, 0.69].map((z) => (
+        <mesh key={`tnt-z-${z}`} position={[0, 0, z]}>
+          <boxGeometry args={[0.8, 0.28, 0.01]} />
+          <meshBasicMaterial color="#0f172a" />
+        </mesh>
+      ))}
+      {/* Top Fuse */}
+      <mesh position={[0, 0.72, 0]}>
+        <boxGeometry args={[0.08, 0.15, 0.08]} />
+        <meshStandardMaterial color="#475569" roughness={0.9} />
+      </mesh>
+      <pointLight color="#ff4444" distance={2.5} intensity={1.8} />
+    </group>
+  );
+}
+
 // Backwards-compatible aliases to preserve any external imports seamlessly
 export const KeyCap = VoxelBlock;
 export const Cloud = VoxelCloud;
