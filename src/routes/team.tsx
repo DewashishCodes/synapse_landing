@@ -682,13 +682,6 @@ function TeamPage() {
             Symbiosis Institute of Technology (SIT), Pune.
           </p>
 
-          {/* STATUS NOTICE */}
-          <div className="mt-6 quest-row inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 py-2 px-4 max-w-xl border-amber-500/50 bg-amber-950/20 text-amber-200 text-xs font-hud">
-            <span className="text-base">✦</span>
-            <span>
-              LIVE GUILD ROSTER · HIERARCHICAL DOMAINS & LEADERSHIP DIRECTORY
-            </span>
-          </div>
         </div>
 
         {/* HIERARCHICAL TIER 1: THE HEADS SHOWCASE (ALWAYS DISPLAYED AT THE TOP ON 'ALL' OR 'HEADS' VIEW) */}
@@ -705,9 +698,6 @@ function TeamPage() {
                     TIER 01 // OVERALL SYNAPSE 1.0 DIRECTORS & CONVENERS
                   </p>
                 </div>
-              </div>
-              <div className="text-[11px] font-hud text-amber-400/80 px-2.5 py-1 border border-amber-500/40 bg-amber-950/30 self-start sm:self-auto">
-                3 HEAD POSITIONS
               </div>
             </div>
 
