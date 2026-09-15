@@ -51,6 +51,7 @@ interface TeamMember {
   quote?: string;
   photoUrl?: string;
   linkedinUrl?: string;
+  instagramUrl?: string;
   isHead?: boolean;
   isPlaceholder?: boolean;
 }
@@ -80,17 +81,20 @@ const teamMembers: TeamMember[] = [
   {
     id: "head-02",
     slotNumber: "02",
-    name: "[ Head Position 02 ]",
+    name: "Dewashish Lambore",
     domain: "Head",
     role: "Head",
     category: "heads",
     affiliation: "Synapse 1.0 Organizing Council · SIT Pune",
     badge: "HEAD",
     badgeColor:
-      "border-amber-400/80 text-amber-300/80 bg-amber-950/40 border-dashed",
+      "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
+    quote: "The quieter I am, the more trouble you are in.",
+    photoUrl: "https://lh3.googleusercontent.com/d/1UwVGZAoe7xtwfGmvrbjlacbqFDOe9J61",
+    linkedinUrl:
+      "https://www.linkedin.com/in/dewashish-lambore-927048318?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     isHead: true,
-    isPlaceholder: true,
   },
   {
     id: "head-03",
@@ -168,6 +172,9 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
+    quote: "404: Limits Not Found.",
+    photoUrl: "https://lh3.googleusercontent.com/d/1tJBsN1ZwZGAcg2hblU5buqqofO6g2g0H",
+    instagramUrl: "https://instagram.com/Utsav.tyagi2",
   },
   {
     id: "event-03",
@@ -194,6 +201,10 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
+    quote: "I am a dedicated and resourceful problem-solver",
+    photoUrl: "https://lh3.googleusercontent.com/d/1eO1FnxN684k16qAA3muWfv7xJIhI3EEA",
+    linkedinUrl:
+      "https://www.linkedin.com/in/arnav-mehta-508416429?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
   {
     id: "logistics-01",
@@ -284,6 +295,8 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-pink-400 text-pink-300 bg-pink-950/60 shadow-[0_0_8px_rgba(244,114,182,0.3)]",
     icon: "🎙️",
+    quote: "Procrastination at its peak!",
+    photoUrl: "https://lh3.googleusercontent.com/d/1dLLhNNKkQASooVk_seASZNB5_RtuG5Fp",
   },
   {
     id: "anchor-03",
@@ -297,6 +310,11 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-pink-400 text-pink-300 bg-pink-950/60 shadow-[0_0_8px_rgba(244,114,182,0.3)]",
     icon: "🎙️",
+    quote:
+      "A work in progress with main-character energy, but the plot is getting interesting.",
+    photoUrl: "https://lh3.googleusercontent.com/d/1K90YkPs8xo8GKthIu2r3yIQ7YxwcGfm0",
+    linkedinUrl:
+      "https://www.linkedin.com/in/triguna-khati-6553a4411?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
 
   // ==========================================
@@ -584,6 +602,15 @@ function MemberCard({ member }: { member: TeamMember }) {
               <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45c-.89 0-1.61.72-1.61 1.61 0 .89.72 1.61 1.61 1.61.89 0 1.61-.72 1.61-1.61 0-.89-.72-1.61-1.61-1.61Z" />
             </svg>
             <span>LINKEDIN ↗</span>
+          </a>
+        ) : member.instagramUrl ? (
+          <a
+            href={member.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-hud border border-pink-500/50 bg-pink-950/40 text-pink-300 hover:border-pink-400 hover:bg-pink-900/60 hover:text-white transition-all shadow-[0_0_8px_rgba(244,114,182,0.2)]"
+          >
+            <span>INSTAGRAM ↗</span>
           </a>
         ) : (
           <div className="text-[10px] font-hud text-foreground/30 px-2 py-0.5 border border-stone-800/60 bg-stone-900/20">
