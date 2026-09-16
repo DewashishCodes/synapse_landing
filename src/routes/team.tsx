@@ -407,6 +407,8 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-teal-400 text-teal-300 bg-teal-950/60 shadow-[0_0_8px_rgba(45,212,191,0.3)]",
     icon: "📷",
+    quote: "“I came, I saw, I made it awkward.”",
+    photoUrl: "/team/srishti_raj.png",
   },
   {
     id: "photo-03",
