@@ -355,8 +355,7 @@ const teamMembers: TeamMember[] = [
       "border-violet-400 text-violet-300 bg-violet-950/60 shadow-[0_0_8px_rgba(167,139,250,0.3)]",
     icon: "📱",
     quote: "Trust the plot twist✨",
-    photoUrl:
-      "https://lh3.googleusercontent.com/d/141SZWvvpaEmUynD-YFDhSBPSBUnKJfRV",
+    photoUrl: "/team/sukhman_kaur.jpg",
   },
   {
     id: "editor-01",
