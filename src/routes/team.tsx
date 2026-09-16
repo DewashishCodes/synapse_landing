@@ -73,7 +73,7 @@ const teamMembers: TeamMember[] = [
       "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
     quote: "I like to driveeee!!",
-    photoUrl: "https://lh3.googleusercontent.com/d/1ql3pA0PBB87fh50kqgTXIcszdjK7zRJG",
+    photoUrl: "/team/revanth_sai_sreerangam.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/revanth-sai-sreerangam-74516421a?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     isHead: true,
@@ -91,7 +91,7 @@ const teamMembers: TeamMember[] = [
       "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
     quote: "The quieter I am, the more trouble you are in.",
-    photoUrl: "https://lh3.googleusercontent.com/d/1UwVGZAoe7xtwfGmvrbjlacbqFDOe9J61",
+    photoUrl: "/team/dewashish_lambore.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/dewashish-lambore-927048318?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     isHead: true,
@@ -161,7 +161,7 @@ const teamMembers: TeamMember[] = [
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
     quote: "Kinda chic to be chaotic",
-    photoUrl: "https://lh3.googleusercontent.com/d/1Px08OwpoblRkj3KeW7ez6VD34_E1kjSH",
+    photoUrl: "/team/swarali_deshpande.jpg",
   },
   {
     id: "event-02",
@@ -205,7 +205,7 @@ const teamMembers: TeamMember[] = [
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
     quote: "I am a dedicated and resourceful problem-solver",
-    photoUrl: "https://lh3.googleusercontent.com/d/1eO1FnxN684k16qAA3muWfv7xJIhI3EEA",
+    photoUrl: "/team/arnav_mehta.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/arnav-mehta-508416429?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
@@ -303,7 +303,7 @@ const teamMembers: TeamMember[] = [
       "border-pink-400 text-pink-300 bg-pink-950/60 shadow-[0_0_8px_rgba(244,114,182,0.3)]",
     icon: "🎙️",
     quote: "Procrastination at its peak!",
-    photoUrl: "https://lh3.googleusercontent.com/d/1dLLhNNKkQASooVk_seASZNB5_RtuG5Fp",
+    photoUrl: "/team/zachariah_bobby.jpg",
   },
   {
     id: "anchor-03",
