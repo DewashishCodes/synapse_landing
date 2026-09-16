@@ -127,6 +127,8 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-emerald-400 text-emerald-300 bg-emerald-950/60 shadow-[0_0_8px_rgba(80,250,123,0.3)]",
     icon: "⚡",
+    quote: "Till the last commit do us part",
+    linkedinUrl: "https://www.linkedin.com/in/jayvee-shah-b113a0369/",
   },
   {
     id: "design-01",
@@ -265,6 +267,10 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-amber-400/80 text-amber-300 bg-amber-950/60 shadow-[0_0_8px_rgba(251,191,36,0.3)]",
     icon: "📜",
+    quote: "Powered by caffeine and blue light.",
+    photoUrl: "https://lh3.googleusercontent.com/d/17f1fe1uMaf9ZtbJrusdUTleJnaL-vuUL",
+    linkedinUrl:
+      "https://www.linkedin.com/in/aishani-gupta-68703b409?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
   {
     id: "anchor-01",
