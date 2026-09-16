@@ -452,6 +452,21 @@ const categories: { id: Category; label: string; count: number }[] = [
   },
 ];
 
+function getCandidateImageUrls(url?: string): string[] {
+  if (!url) return [];
+  const driveIdMatch =
+    url.match(/[?&]id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (driveIdMatch && driveIdMatch[1]) {
+    const id = driveIdMatch[1];
+    return [
+      `https://lh3.googleusercontent.com/d/${id}`,
+      `https://drive.google.com/thumbnail?id=${id}&sz=w800`,
+      `https://drive.google.com/uc?export=view&id=${id}`,
+    ];
+  }
+  return [url];
+}
+
 function MemberAvatar({
   name,
   photoUrl,
@@ -465,9 +480,21 @@ function MemberAvatar({
   isPlaceholder?: boolean;
   isHead?: boolean;
 }) {
-  const [imageFailed, setImageFailed] = useState(false);
+  const candidates = getCandidateImageUrls(photoUrl);
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [hasError, setHasError] = useState(false);
 
-  if (isPlaceholder || !photoUrl || imageFailed) {
+  const currentSrc = candidates[candidateIndex];
+
+  const handleError = () => {
+    if (candidateIndex < candidates.length - 1) {
+      setCandidateIndex((prev) => prev + 1);
+    } else {
+      setHasError(true);
+    }
+  };
+
+  if (isPlaceholder || !photoUrl || hasError) {
     return (
       <div
         className={`aspect-square w-full max-w-[130px] mx-auto border-2 ${
@@ -510,9 +537,11 @@ function MemberAvatar({
       } overflow-hidden bg-stone-950 transition-all group-hover:shadow-[0_0_18px_rgba(0,229,255,0.35)]`}
     >
       <img
-        src={photoUrl}
+        src={currentSrc}
         alt={name}
-        onError={() => setImageFailed(true)}
+        referrerPolicy="no-referrer"
+        crossOrigin="anonymous"
+        onError={handleError}
         loading="lazy"
         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
       />
