@@ -319,7 +319,7 @@ const teamMembers: TeamMember[] = [
     icon: "🎙️",
     quote:
       "A work in progress with main-character energy, but the plot is getting interesting.",
-    photoUrl: "https://lh3.googleusercontent.com/d/1K90YkPs8xo8GKthIu2r3yIQ7YxwcGfm0",
+    photoUrl: "/team/triguna_khati.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/triguna-khati-6553a4411?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
