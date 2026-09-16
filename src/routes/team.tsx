@@ -143,6 +143,11 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-purple-400 text-purple-300 bg-purple-950/60 shadow-[0_0_8px_rgba(192,132,252,0.3)]",
     icon: "🎨",
+    quote: "High on Good Sprit",
+    photoUrl:
+      "https://drive.google.com/open?id=16YTH_YD_hfKSUQuKpsv18DGavtthD9zn",
+    linkedinUrl:
+      "https://www.linkedin.com/in/arya-shukla-683610418?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
 
   // ==========================================
@@ -182,7 +187,7 @@ const teamMembers: TeamMember[] = [
   {
     id: "event-03",
     slotNumber: "08",
-    name: "Dhairya Raajpur",
+    name: "Dhairya Raajpura",
     domain: "Events",
     role: "Events",
     category: "events_logistics",
@@ -191,6 +196,9 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
+    quote: "probably planning my next trip",
+    photoUrl:
+      "https://drive.google.com/open?id=1Aj5o5xx1nVgEkMS7_KeLD-9-Cp6JibrA",
   },
   {
     id: "event-04",
@@ -225,7 +233,7 @@ const teamMembers: TeamMember[] = [
   {
     id: "logistics-02",
     slotNumber: "11",
-    name: "Shaumik Ahlawa",
+    name: "Shaumik Ahlawat",
     domain: "Logistics",
     role: "Logistics",
     category: "events_logistics",
@@ -234,6 +242,9 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-blue-400 text-blue-300 bg-blue-950/60 shadow-[0_0_8px_rgba(96,165,250,0.3)]",
     icon: "📦",
+    quote: "“Always up for a new place, a new idea, or a good conversation.”",
+    photoUrl:
+      "https://drive.google.com/open?id=1wsqG5uQL3nuMsjtNkBaSwuZ0Wu79flG5",
   },
 
   // ==========================================
@@ -412,6 +423,12 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-teal-400 text-teal-300 bg-teal-950/60 shadow-[0_0_8px_rgba(45,212,191,0.3)]",
     icon: "📷",
+    quote:
+      "The only person at Synapse 2026 who focus on something other than a laptop screen.",
+    photoUrl:
+      "https://drive.google.com/open?id=1aIRz7OZBkiZcx62cNlJUIGAzNryAkPp0",
+    linkedinUrl:
+      "https://www.linkedin.com/in/akshit-joglekar-5623b5422?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
   {
     id: "decoration-01",
