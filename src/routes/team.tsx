@@ -128,6 +128,7 @@ const teamMembers: TeamMember[] = [
       "border-emerald-400 text-emerald-300 bg-emerald-950/60 shadow-[0_0_8px_rgba(80,250,123,0.3)]",
     icon: "⚡",
     quote: "Till the last commit do us part",
+    photoUrl: "/team/jayvee_shah.jpg",
     linkedinUrl: "https://www.linkedin.com/in/jayvee-shah-b113a0369/",
   },
   {
