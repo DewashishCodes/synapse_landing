@@ -175,7 +175,7 @@ const teamMembers: TeamMember[] = [
       "border-cyan-400 text-cyan-300 bg-cyan-950/60 shadow-[0_0_8px_rgba(0,229,255,0.4)]",
     icon: "🎯",
     quote: "404: Limits Not Found.",
-    photoUrl: "https://lh3.googleusercontent.com/d/1tJBsN1ZwZGAcg2hblU5buqqofO6g2g0H",
+    photoUrl: "/team/utsav_tyagi.jpg",
     instagramUrl: "https://instagram.com/Utsav.tyagi2",
   },
   {
@@ -251,7 +251,7 @@ const teamMembers: TeamMember[] = [
       "border-amber-400/80 text-amber-300 bg-amber-950/60 shadow-[0_0_8px_rgba(251,191,36,0.3)]",
     icon: "📜",
     quote: "Collecting skills, stories, and deadlines.",
-    photoUrl: "https://lh3.googleusercontent.com/d/1T1Nqs700ilraQyA5FcA_1ApZdPWIljTO",
+    photoUrl: "/team/novera_zahid.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/novera-zahid?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
   },
@@ -268,7 +268,7 @@ const teamMembers: TeamMember[] = [
       "border-amber-400/80 text-amber-300 bg-amber-950/60 shadow-[0_0_8px_rgba(251,191,36,0.3)]",
     icon: "📜",
     quote: "Powered by caffeine and blue light.",
-    photoUrl: "https://lh3.googleusercontent.com/d/17f1fe1uMaf9ZtbJrusdUTleJnaL-vuUL",
+    photoUrl: "/team/aishani_gupta.png",
     linkedinUrl:
       "https://www.linkedin.com/in/aishani-gupta-68703b409?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
@@ -285,7 +285,7 @@ const teamMembers: TeamMember[] = [
       "border-pink-400 text-pink-300 bg-pink-950/60 shadow-[0_0_8px_rgba(244,114,182,0.3)]",
     icon: "🎙️",
     quote: "To Be Audacious",
-    photoUrl: "https://lh3.googleusercontent.com/d/1fBMFwXWFZ9CQ7hTED_J0W5tONxebyjyE",
+    photoUrl: "/team/avni_singh.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/avni-singh-6760a4433?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
@@ -339,7 +339,7 @@ const teamMembers: TeamMember[] = [
       "border-violet-400 text-violet-300 bg-violet-950/60 shadow-[0_0_8px_rgba(167,139,250,0.3)]",
     icon: "📱",
     quote: "Ready for cheos",
-    photoUrl: "https://lh3.googleusercontent.com/d/1wHxWWvRFduMnNuxhx6X7QZMK6asIHWGA",
+    photoUrl: "/team/arhan_nair.jpg",
   },
   {
     id: "social-02",
@@ -380,7 +380,7 @@ const teamMembers: TeamMember[] = [
       "border-teal-400 text-teal-300 bg-teal-950/60 shadow-[0_0_8px_rgba(45,212,191,0.3)]",
     icon: "📷",
     quote: "“Capturing moments, one frame at a time.” 📸",
-    photoUrl: "https://lh3.googleusercontent.com/d/1YFchg2XZcKeDeRzC-TAKJ14Q7iJtKWGA",
+    photoUrl: "/team/samik_dorlikar.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/samik-dorlikar-b67356386?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
   },
@@ -423,7 +423,7 @@ const teamMembers: TeamMember[] = [
       "border-amber-300 text-amber-200 bg-amber-950/60 shadow-[0_0_8px_rgba(252,211,77,0.3)]",
     icon: "✨",
     quote: "Explorer",
-    photoUrl: "https://lh3.googleusercontent.com/d/1IykB9YdGVb1YfK64sn8e1HafoAoREQMo",
+    photoUrl: "/team/krishita_biradar.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/krishita-biradar-429941415?utm_source=share_via&utm_content=profile&utm_medium=member_android",
   },
