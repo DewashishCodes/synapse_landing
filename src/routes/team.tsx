@@ -377,6 +377,9 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-indigo-400 text-indigo-300 bg-indigo-950/60 shadow-[0_0_8px_rgba(129,140,248,0.3)]",
     icon: "🎬",
+    quote: "“Visual Alchemist”",
+    photoUrl: "/team/gaurav_singh_verma.png",
+    linkedinUrl: "https://www.linkedin.com/in/gaurav-singh-verma-663424411",
   },
   {
     id: "photo-01",
