@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { HackScene } from "@/components/hack/HackScene";
 import { Overlay } from "@/components/hack/Overlay";
+import { SiteLoader } from "@/components/hack/SiteLoader";
 import { useScrollProgress } from "@/components/hack/useScrollProgress";
 
 export const Route = createFileRoute("/")({
@@ -34,6 +35,7 @@ function Index() {
   useScrollProgress();
   return (
     <>
+      <SiteLoader />
       <HackScene />
       <Overlay />
     </>
