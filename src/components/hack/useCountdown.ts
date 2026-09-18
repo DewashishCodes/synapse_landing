@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-// Registration closes: 17 Sep 2026, 11:59:59 PM IST
-export const REGISTRATION_DEADLINE = new Date("2026-09-17T23:59:59+05:30").getTime();
+// Registration & PPT submission closes: 20 Sep 2026, 11:59:59 PM IST
+export const REGISTRATION_DEADLINE = new Date("2026-09-20T23:59:59+05:30").getTime();
 
 export interface TimeRemaining {
   days: number;

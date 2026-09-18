@@ -22,6 +22,7 @@
   --font-display: "Pixelify Sans", sans-serif;
   --font-pixel: "Pixelify Sans", sans-serif;
   --font-hud: "Silkscreen", monospace;
+  --font-numeral: "VT323", monospace;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --color-accent-lime: var(--accent-lime);
   --color-accent-sun: var(--accent-sun);
@@ -476,6 +477,18 @@
       0 0 18px rgba(255, 215, 0, 0.25);
   }
 
+  /* Revealed sponsor logo card (replaces the dashed "coming soon" look) */
+  .sponsor-slot--revealed {
+    border-style: solid;
+    border-color: oklch(0.42 0.05 85 / 60%);
+    background: oklch(0.97 0.005 260);
+    box-shadow: none;
+  }
+  .sponsor-slot--revealed:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+  }
+
   /* Minecraft Hotbar Navigation */
   .minecraft-hotbar {
     display: flex;
@@ -556,4 +569,18 @@
     transform: scale(1.15);
     opacity: 1;
   }
+}
+
+@keyframes logo-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+.animate-logo-float {
+  animation: logo-float 3.2s ease-in-out infinite;
 }
