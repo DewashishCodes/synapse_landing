@@ -3,8 +3,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer, Stars, Text } from "@react-three/drei";
 import * as THREE from "three";
 
-import { Programmer } from "./Programmer";
 import { SponsorStage } from "./SponsorStage";
+import { TealBot } from "./TealBot";
 import {
   VoxelBlock,
   VoxelCloud,
@@ -103,7 +103,9 @@ function Rig() {
 
   return (
     <group ref={chair}>
-      <Programmer />
+      <Suspense fallback={null}>
+        <TealBot />
+      </Suspense>
     </group>
   );
 }
