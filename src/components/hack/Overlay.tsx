@@ -72,12 +72,12 @@ function PrizePoolStat() {
   return (
     <div
       ref={ref}
-      className="mt-2 mb-6 border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-stone-950/80 to-stone-950/80 px-6 py-6 text-center shadow-[0_0_30px_rgba(251,191,36,0.15)]"
+      className="mt-2 mb-6 border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-stone-950/80 to-stone-950/80 px-3 py-6 sm:px-6 text-center shadow-[0_0_30px_rgba(251,191,36,0.15)]"
     >
       <div className="mb-2 text-[10px] font-hud uppercase tracking-[0.3em] text-amber-300/80">
         💰 Total Prize Pool
       </div>
-      <div className="font-numeral text-6xl sm:text-7xl text-amber-300 tabular-nums drop-shadow-[0_0_20px_rgba(251,191,36,0.5)]">
+      <div className="font-numeral text-4xl sm:text-6xl md:text-7xl text-amber-300 tabular-nums drop-shadow-[0_0_20px_rgba(251,191,36,0.5)]">
         ₹{amount.toLocaleString("en-IN")}
       </div>
       <div className="mt-2 text-[11px] text-foreground/60 font-sans">

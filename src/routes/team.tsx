@@ -90,7 +90,7 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
-    quote: "The quieter I am, the more trouble you are in.",
+    quote: "In the same boat, our waters just different",
     photoUrl: "/team/dewashish_lambore.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/dewashish-lambore-927048318?utm_source=share_via&utm_content=profile&utm_medium=member_android",
