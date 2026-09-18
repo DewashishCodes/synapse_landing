@@ -99,17 +99,20 @@ const teamMembers: TeamMember[] = [
   {
     id: "head-03",
     slotNumber: "03",
-    name: "[ Head Position 03 ]",
+    name: "Dhriti Manpurkar",
     domain: "Head",
     role: "Head",
     category: "heads",
     affiliation: "Synapse 1.0 Organizing Council · SIT Pune",
     badge: "HEAD",
     badgeColor:
-      "border-amber-400/80 text-amber-300/80 bg-amber-950/40 border-dashed",
+      "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
+    quote: "Too busy making things happen to know what's happening.",
+    photoUrl: "/team/dhriti_manpurkar.jpg",
+    linkedinUrl:
+      "https://www.linkedin.com/in/dhriti-manpurkar?utm_source=share_via&utm_content=profile&utm_medium=member_android",
     isHead: true,
-    isPlaceholder: true,
   },
 
   // ==========================================
@@ -407,6 +410,8 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-teal-400 text-teal-300 bg-teal-950/60 shadow-[0_0_8px_rgba(45,212,191,0.3)]",
     icon: "📷",
+    quote: "I came, I saw, I made it awkward.",
+    photoUrl: "/team/srishti_raj.jpg",
   },
   {
     id: "photo-03",
