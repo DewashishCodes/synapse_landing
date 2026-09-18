@@ -649,7 +649,8 @@ function MemberCard({ member }: { member: TeamMember }) {
       </div>
 
       {/* BOTTOM SOCIALS / ACTION BAR */}
-      <div className="mt-4 pt-3 border-t border-stone-800/80 flex items-center justify-center gap-2">
+      {(member.linkedinUrl || member.instagramUrl || member.isPlaceholder) && (
+        <div className="mt-4 pt-3 border-t border-stone-800/80 flex items-center justify-center gap-2">
         {member.linkedinUrl ? (
           <a
             href={member.linkedinUrl}
@@ -671,12 +672,13 @@ function MemberCard({ member }: { member: TeamMember }) {
           >
             <span>INSTAGRAM ↗</span>
           </a>
-        ) : (
+        ) : member.isPlaceholder ? (
           <div className="text-[10px] font-hud text-foreground/30 px-2 py-0.5 border border-stone-800/60 bg-stone-900/20">
-            {member.isPlaceholder ? "RESERVED" : "PROFILE"}
+            RESERVED
           </div>
-        )}
+        ) : null}
       </div>
+      )}
     </div>
   );
 }
