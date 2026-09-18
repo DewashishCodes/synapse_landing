@@ -1,15 +1,38 @@
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Billboard, Text } from "@react-three/drei";
+import { Billboard, Text, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 
 const SLOTS = 6;
+const SPONSOR_NAMES = ["NASDAQ", "PACCAR India", "Innvolution"];
+const SPONSOR_LOGOS = ["/sponsors/nasdaq.png", "/sponsors/paccar-india.png", "/sponsors/innvolution.avif"];
+
+/** Fit a texture's native aspect ratio inside a max width/height box. */
+function fitTexture(texture: THREE.Texture, maxW: number, maxH: number): [number, number] {
+  const img = texture.image as { width: number; height: number } | undefined;
+  const aspect = img && img.height ? img.width / img.height : 1;
+  let w = maxW;
+  let h = maxW / aspect;
+  if (h > maxH) {
+    h = maxH;
+    w = maxH * aspect;
+  }
+  return [w, h];
+}
 
 /** Minecraft Village Trading Hall & Luminous Beacon Altar */
 export function SponsorStage({ y }: { y: number }) {
   const ring = useRef<THREE.Group>(null);
   const beaconBeam = useRef<THREE.Mesh>(null);
   const halo = useRef<THREE.Mesh>(null);
+
+  const logoTextures = useTexture(SPONSOR_LOGOS);
+  useMemo(() => {
+    logoTextures.forEach((tex) => {
+      tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = 4;
+    });
+  }, [logoTextures]);
 
   useFrame((state, delta) => {
     if (ring.current) ring.current.rotation.y += delta * 0.2;
@@ -95,6 +118,9 @@ export function SponsorStage({ y }: { y: number }) {
         {Array.from({ length: SLOTS }, (_, i) => {
           const a = (i / SLOTS) * Math.PI * 2;
           const r = 13.5;
+          const logoIndex = i % SPONSOR_LOGOS.length;
+          const texture = logoTextures[logoIndex];
+          const [logoW, logoH] = texture ? fitTexture(texture, 4.6, 2.1) : [4.6, 2.1];
           return (
             <Billboard
               key={i}
@@ -118,31 +144,28 @@ export function SponsorStage({ y }: { y: number }) {
               <mesh position={[0, 0, 0.19]}>
                 <planeGeometry args={[5.8, 3.4]} />
                 <meshStandardMaterial
-                  color="#fef3c7"
-                  emissive="#fef3c7"
-                  emissiveIntensity={0.65}
+                  color="#f8fafc"
+                  emissive="#f8fafc"
+                  emissiveIntensity={0.6}
                   roughness={0.9}
                 />
               </mesh>
+              {/* Sponsor logo, fit to native aspect ratio */}
+              {texture && (
+                <mesh position={[0, 0.35, 0.2]}>
+                  <planeGeometry args={[logoW, logoH]} />
+                  <meshBasicMaterial map={texture} transparent toneMapped={false} />
+                </mesh>
+              )}
               <Text
-                position={[0, 0.2, 0.22]}
-                fontSize={0.42}
+                position={[0, -1.15, 0.22]}
+                fontSize={0.22}
                 color="#78350f"
                 anchorX="center"
                 anchorY="middle"
-                letterSpacing={0.12}
+                letterSpacing={0.14}
               >
-                PARTNER EMBLEM
-              </Text>
-              <Text
-                position={[0, -0.4, 0.22]}
-                fontSize={0.24}
-                color="#b45309"
-                anchorX="center"
-                anchorY="middle"
-                letterSpacing={0.16}
-              >
-                REVEAL: 15 SEP
+                {SPONSOR_NAMES[logoIndex]?.toUpperCase()} · OFFICIAL SPONSOR
               </Text>
               {/* Diamond Glow Edge */}
               <mesh position={[0, 0, -0.25]}>
