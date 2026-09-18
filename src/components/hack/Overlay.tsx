@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useCountdown } from "./useCountdown";
+import { useAnimatedCount, useCountdown } from "./useCountdown";
 
 const UNSTOP_REGISTER_URL =
   "https://unstop.com/hackathons/sit-flagship-hackathon-2026-8-hour-ai-hackathon-symbiosis-institute-of-technology-sit-pune-1746836";
@@ -65,10 +65,32 @@ function Section({
   );
 }
 
+function PrizePoolStat() {
+  const { ref, seen } = useInView<HTMLDivElement>();
+  const amount = useAnimatedCount(seen ? 45000 : 0, 1600);
+
+  return (
+    <div
+      ref={ref}
+      className="mt-2 mb-6 border-2 border-amber-500/50 bg-gradient-to-br from-amber-950/40 via-stone-950/80 to-stone-950/80 px-3 py-6 sm:px-6 text-center shadow-[0_0_30px_rgba(251,191,36,0.15)]"
+    >
+      <div className="mb-2 text-[10px] font-hud uppercase tracking-[0.3em] text-amber-300/80">
+        💰 Total Prize Pool
+      </div>
+      <div className="font-numeral text-4xl sm:text-6xl md:text-7xl text-amber-300 tabular-nums drop-shadow-[0_0_20px_rgba(251,191,36,0.5)]">
+        ₹{amount.toLocaleString("en-IN")}
+      </div>
+      <div className="mt-2 text-[11px] text-foreground/60 font-sans">
+        ₹15,000 split evenly across three tracks
+      </div>
+    </div>
+  );
+}
+
 const tracks = [
   {
     icon: "⚙️",
-    name: "AI in Automation",
+    name: "AI in Automotives",
     copy: "Visual quality inspection on assembly lines, intelligent route & fleet logistics optimization, warranty defect mining & legacy parts obsolescence assistant.",
   },
   {
@@ -91,7 +113,7 @@ const tracks = [
 const stages = [
   {
     step: "01",
-    date: "04 – 17 Sep",
+    date: "04 – 20 Sep",
     status: "Live",
     title: "Registration",
     summary: "Form a team of 2–4 members and register on Unstop.",
@@ -109,10 +131,10 @@ const stages = [
   },
   {
     step: "03",
-    date: "10 – 17 Sep",
+    date: "10 – 20 Sep",
     status: "Live",
     title: "Concept & PPT Submission",
-    summary: "Submit proposed solution using the prescribed PPT format before 17 Sep.",
+    summary: "Submit proposed solution using the prescribed PPT format before 20 Sep.",
     link: "https://docs.google.com/presentation/d/1rqsWU6EXgTRaemE4th6hhaaCuSa3o0Z69BbW_bvKI9s/edit?usp=sharing",
     linkText: "PPT Template ↗",
   },
@@ -125,7 +147,7 @@ const stages = [
   },
   {
     step: "05",
-    date: "20 Sep",
+    date: "21 Sep",
     status: "Upcoming",
     title: "Shortlisting & Finalists",
     summary: "Technical evaluation; shortlisted teams announced for the offline finale.",
@@ -141,6 +163,10 @@ const stages = [
   },
 ];
 
+// Populated with { team: "Team Name", members: "College / track (optional)" } once
+// results are announced on 21 Sep 2026. Empty array renders the "not revealed yet" state.
+const shortlistedTeams: { team: string; note?: string }[] = [];
+
 const teamFormationRules = [
   "Team size: 2–4 members",
   "Each participant must have a laptop",
@@ -155,56 +181,34 @@ export function Overlay() {
   return (
     <main className="relative z-10">
       {/* REFINED MINECRAFT HUD FLOATING NAVIGATION */}
-      <header className="fixed top-0 left-0 right-0 z-50 pt-4 px-3 sm:px-6 pointer-events-none">
-        <nav className="mx-auto max-w-7xl pointer-events-auto border-2 border-stone-700/80 bg-stone-950/90 backdrop-blur-md px-5 sm:px-7 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.6)] flex items-center justify-between gap-4 lg:gap-8">
-          {/* LOGO */}
-          <a href="#top" className="flex items-center gap-2.5 shrink-0 select-none group">
-            <span className="w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_10px_#00e5ff] shrink-0" />
-            <span className="font-hud text-sm font-bold text-foreground tracking-wider whitespace-nowrap">
-              SYNAPSE 1.0
-            </span>
-            <span className="hidden sm:inline-block font-hud text-[10px] text-emerald-400 border border-emerald-500/40 bg-emerald-950/60 px-1.5 py-0.5 whitespace-nowrap">
-              SIT PUNE
-            </span>
-          </a>
+      <header className="fixed top-0 left-0 right-0 z-50 pt-4 px-3 sm:px-6 pointer-events-none flex items-center justify-between gap-3">
+        {/* LOGO — full link list lives in the bottom hotbar */}
+        <a
+          href="#top"
+          className="pointer-events-auto flex items-center gap-2.5 shrink-0 select-none group border-2 border-stone-700/80 bg-stone-950/90 backdrop-blur-md px-4 sm:px-5 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
+        >
+          <img
+            src="/logo-small.png"
+            alt="Synapse 1.0"
+            className="h-9 w-9 sm:h-10 sm:w-10 object-contain shrink-0 drop-shadow-[0_0_10px_rgba(0,229,255,0.5)] animate-logo-float"
+          />
+          <span className="font-hud text-sm font-bold text-foreground tracking-wider whitespace-nowrap">
+            SYNAPSE 1.0
+          </span>
+          <span className="hidden sm:inline-block font-hud text-[10px] text-emerald-400 border border-emerald-500/40 bg-emerald-950/60 px-1.5 py-0.5 whitespace-nowrap">
+            SIT PUNE
+          </span>
+        </a>
 
-          {/* UNCLUTTERED NAV LINKS */}
-          <div className="hidden md:flex items-center gap-4 md:gap-5 lg:gap-7 xl:gap-8 text-foreground/75">
-            <a className="nav-link" href="#overview">
-              Overview
-            </a>
-            <a className="nav-link" href="#tracks">
-              Tracks
-            </a>
-            <a className="nav-link" href="#timeline">
-              Timeline
-            </a>
-            <a className="nav-link" href="#details">
-              Team Formation
-            </a>
-            <a className="nav-link" href="#prizes">
-              Prizes
-            </a>
-            <a className="nav-link" href="#sponsors">
-              Sponsors
-            </a>
-            <Link to="/team" className="nav-link text-cyan-300 hover:text-cyan-200">
-              The Team
-            </Link>
-          </div>
-
-          {/* RIGHT ACTION */}
-          <div className="flex items-center gap-3 shrink-0">
-            <a
-              href={UNSTOP_REGISTER_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="pixel-btn-diamond text-xs py-2 px-4 whitespace-nowrap shrink-0"
-            >
-              <span>REGISTER ↗</span>
-            </a>
-          </div>
-        </nav>
+        {/* RIGHT ACTION */}
+        <a
+          href={UNSTOP_REGISTER_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="pointer-events-auto pixel-btn-diamond text-xs py-2 px-4 whitespace-nowrap shrink-0"
+        >
+          <span>REGISTER ↗</span>
+        </a>
       </header>
 
       {/* HERO: SURFACE / NIGHT SKY LAUNCH */}
@@ -255,6 +259,18 @@ export function Overlay() {
           Pune, presents <span className="text-cyan-300 font-semibold">Synapse 1.0</span> — an
           intensive 8-hour offline AI hackathon where industry challenges meet student innovation.
         </p>
+
+        {/* PRIZE POOL CALLOUT */}
+        <a
+          href="#prizes"
+          className="mt-5 inline-flex items-center gap-2.5 border-2 border-amber-500/60 bg-amber-950/30 px-4 py-1.5 shadow-[0_0_18px_rgba(251,191,36,0.2)] hover:border-amber-400 hover:shadow-[0_0_24px_rgba(251,191,36,0.35)] transition-all"
+        >
+          <span className="text-base">💰</span>
+          <span className="font-hud text-[10px] uppercase tracking-[0.2em] text-amber-300/80">
+            Prize Pool
+          </span>
+          <span className="font-numeral text-2xl leading-none text-amber-300">₹45,000</span>
+        </a>
 
         {/* LIVE COUNTER HERO BUTTONS */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
@@ -322,8 +338,9 @@ export function Overlay() {
         </p>
 
         {/* INVENTORY SLOTS / HUD STATS WITH LIVE COUNTER */}
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {[
+            { num: "₹45,000", label: "Total Prize Pool", icon: "💰", accent: "text-amber-300" },
             { num: "8-Hour", label: "Sprint Duration", icon: "⏱️" },
             { num: "2 – 4", label: "Party Size", icon: "👥" },
             { num: "Offline", label: "SIT Pune Finale", icon: "📍" },
@@ -331,7 +348,9 @@ export function Overlay() {
           ].map((item) => (
             <div key={item.label} className="inventory-slot">
               <span className="text-xl mb-1">{item.icon}</span>
-              <div className="font-hud font-bold text-cyan-300 text-base tabular-nums">
+              <div
+                className={`font-hud font-bold text-base tabular-nums ${item.accent ?? "text-cyan-300"}`}
+              >
                 {item.num}
               </div>
               <div className="text-[10px] font-hud text-foreground/60 uppercase text-center mt-0.5">
@@ -351,7 +370,7 @@ export function Overlay() {
         <p className="section-copy">
           The official Problem Statements & Tracks for Synapse 1.0 are now revealed. Explore the
           tracks, find the challenge that excites you, and start building your solution. Submit your
-          PPT for the Concept & PPT Submission Round by 17th September 2026.
+          PPT for the Concept & PPT Submission Round by 20th September 2026.
         </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -462,6 +481,45 @@ export function Overlay() {
         </div>
       </Section>
 
+      {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // RESULTS QUEST LOG */}
+      <Section align="right" id="shortlisted">
+        <div className="badge-pill mb-3">
+          <span className="text-cyan-400">◆</span> RESULTS // REVEALED 21 SEP
+        </div>
+        <h2 className="section-title">Shortlisted Teams</h2>
+        <p className="section-copy">
+          Teams shortlisted for the offline Grand Finale at SIT Pune will be announced here on 21st
+          September 2026.
+        </p>
+
+        {shortlistedTeams.length === 0 ? (
+          <div className="mt-6 quest-row flex flex-col items-center gap-2 py-8 px-4 text-center">
+            <span className="text-2xl">🔒</span>
+            <span className="text-sm font-hud text-foreground/80 uppercase tracking-wider">
+              Results Locked
+            </span>
+            <p className="text-xs text-foreground/60 font-sans max-w-sm">
+              Submit your Concept &amp; PPT before 20th September to be in the running. Shortlisted
+              teams will unlock right here once results drop on 21st September 2026.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-6 grid gap-2 sm:grid-cols-2">
+            {shortlistedTeams.map((t) => (
+              <div key={t.team} className="quest-row flex items-center gap-3 py-2.5 px-3.5">
+                <span className="text-emerald-400 text-xs shrink-0">✦</span>
+                <div className="flex flex-col">
+                  <span className="text-xs sm:text-sm font-hud text-foreground/90">{t.team}</span>
+                  {t.note && (
+                    <span className="text-[10px] text-foreground/50 font-sans">{t.note}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </Section>
+
       {/* TEAM FORMATION & VENUE: DESCENT LEVEL 04 */}
       <Section align="right" id="details">
         <div className="badge-pill mb-3">
@@ -523,10 +581,12 @@ export function Overlay() {
         </div>
         <h2 className="section-title">Prizes & Opportunities</h2>
         <p className="section-copy">
-          On 15th September, we’ll reveal the official sponsors and track-wise prize pool for
-          Synapse 1.0. Discover the industry partners backing the hackathon and the exciting rewards
-          waiting for the teams that turn their ideas into impactful solutions.
+          Synapse 1.0 is backing its builders with a ₹45,000 total prize pool, backed by NASDAQ,
+          PACCAR India, and Innvolution — alongside industry mentorship and certificates for every
+          team that ships.
         </p>
+
+        <PrizePoolStat />
 
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
@@ -537,13 +597,11 @@ export function Overlay() {
             },
             { title: "🚀 Industry Mentorship", tier: "EPIC REWARD", color: "text-purple-400" },
             { title: "💼 Partner Opportunities", tier: "EPIC REWARD", color: "text-purple-400" },
-            { title: "📜 IEEE SIT Certifications", tier: "RARE ARTIFACT", color: "text-cyan-400" },
             {
-              title: "🎁 Exclusive Swag & Goodies",
-              tier: "COMMON REWARD",
-              color: "text-emerald-400",
+              title: "📜 Winning & Participation Certificates",
+              tier: "RARE ARTIFACT",
+              color: "text-cyan-400",
             },
-            { title: "⭐ Grand Finale Trophy", tier: "MYTHIC TROPHY", color: "text-amber-300" },
           ].map((p) => (
             <div key={p.title} className="quest-row flex items-center justify-between py-2.5 px-3">
               <span className="text-xs font-sans text-foreground">{p.title}</span>
@@ -564,25 +622,29 @@ export function Overlay() {
       >
         <Panel align="center">
           <div className="badge-pill">
-            <span className="text-amber-400">◆</span> VILLAGE TRADING HALL · 15 SEP REVEAL
+            <span className="text-amber-400">◆</span> VILLAGE TRADING HALL · SPONSORS REVEALED
           </div>
           <h2 className="section-title mt-4">Industry Partners & Sponsors</h2>
           <p className="section-copy mx-auto">
-            Discover the industry partners backing Synapse 1.0. Official sponsors and track-wise
-            prize pool will be unveiled at the Trading Hall on 15th September 2026.
+            Meet the industry partners backing Synapse 1.0. Track-wise prize pool details will
+            follow soon.
           </p>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
-              "BEACON PARTNER",
-              "DIAMOND TIER",
-              "EMERALD TIER",
-              "REDSTONE TIER",
-              "GOLD TIER",
-              "OBSIDIAN TIER",
-            ].map((slot) => (
-              <div key={slot} className="sponsor-slot group">
-                <span className="group-hover:scale-105 transition-transform">[ {slot} ]</span>
+              { name: "NASDAQ", src: "/sponsors/nasdaq.png" },
+              { name: "PACCAR India", src: "/sponsors/paccar-india.png" },
+              { name: "Innvolution", src: "/sponsors/innvolution.avif" },
+            ].map((sponsor) => (
+              <div
+                key={sponsor.name}
+                className="sponsor-slot sponsor-slot--revealed group flex items-center justify-center p-4"
+              >
+                <img
+                  src={sponsor.src}
+                  alt={sponsor.name}
+                  className="max-h-14 w-auto object-contain group-hover:scale-105 transition-transform"
+                />
               </div>
             ))}
           </div>
@@ -655,12 +717,13 @@ export function Overlay() {
             { slot: "1", icon: "⚔️", label: "Overview", href: "#overview" },
             { slot: "2", icon: "🗺️", label: "Tracks", href: "#tracks" },
             { slot: "3", icon: "📜", label: "Timeline", href: "#timeline" },
-            { slot: "4", icon: "🛡️", label: "Team Rules", href: "#details" },
-            { slot: "5", icon: "🏆", label: "Prizes", href: "#prizes" },
-            { slot: "6", icon: "🏛️", label: "Sponsors", href: "#sponsors" },
-            { slot: "7", icon: "👥", label: "The Team", href: "/team", isRouter: true },
+            { slot: "4", icon: "🔒", label: "Shortlisted", href: "#shortlisted" },
+            { slot: "5", icon: "🛡️", label: "Team Rules", href: "#details" },
+            { slot: "6", icon: "🏆", label: "Prizes", href: "#prizes" },
+            { slot: "7", icon: "🏛️", label: "Sponsors", href: "#sponsors" },
+            { slot: "8", icon: "👥", label: "The Team", href: "/team", isRouter: true },
             {
-              slot: "8",
+              slot: "9",
               icon: "💎",
               label: "Register",
               href: UNSTOP_REGISTER_URL,

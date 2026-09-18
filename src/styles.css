@@ -22,6 +22,7 @@
   --font-display: "Pixelify Sans", sans-serif;
   --font-pixel: "Pixelify Sans", sans-serif;
   --font-hud: "Silkscreen", monospace;
+  --font-numeral: "VT323", monospace;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --color-accent-lime: var(--accent-lime);
   --color-accent-sun: var(--accent-sun);
@@ -476,12 +477,27 @@
       0 0 18px rgba(255, 215, 0, 0.25);
   }
 
+  /* Revealed sponsor logo card (replaces the dashed "coming soon" look) */
+  .sponsor-slot--revealed {
+    border-style: solid;
+    border-color: oklch(0.42 0.05 85 / 60%);
+    background: oklch(0.97 0.005 260);
+    box-shadow: none;
+  }
+  .sponsor-slot--revealed:hover {
+    border-color: #ffd700;
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+  }
+
   /* Minecraft Hotbar Navigation */
   .minecraft-hotbar {
     display: flex;
     align-items: center;
-    gap: 3px;
-    padding: 4px;
+    gap: 2px;
+    padding: 3px;
+    max-width: calc(100vw - 1.5rem);
+    overflow-x: auto;
+    scrollbar-width: none;
     background: oklch(0.12 0.02 260 / 92%);
     border: 2px solid oklch(0.35 0.03 260);
     box-shadow:
@@ -489,9 +505,18 @@
       inset -2px -2px 0 oklch(0.06 0.01 260),
       0 12px 36px rgba(0, 0, 0, 0.85);
   }
+  .minecraft-hotbar::-webkit-scrollbar {
+    display: none;
+  }
+  @media (min-width: 400px) {
+    .minecraft-hotbar {
+      gap: 3px;
+      padding: 4px;
+    }
+  }
   .minecraft-hotbar-slot {
-    width: 38px;
-    height: 38px;
+    width: 30px;
+    height: 30px;
     background: oklch(0.16 0.02 260 / 90%);
     border: 2px solid oklch(0.26 0.03 260);
     box-shadow:
@@ -501,6 +526,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    flex-shrink: 0;
     transition:
       transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
       border-color 0.12s ease,
@@ -556,4 +582,18 @@
     transform: scale(1.15);
     opacity: 1;
   }
+}
+
+@keyframes logo-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
+.animate-logo-float {
+  animation: logo-float 3.2s ease-in-out infinite;
 }

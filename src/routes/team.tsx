@@ -90,7 +90,7 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-amber-400 text-amber-300 bg-amber-950/70 shadow-[0_0_12px_rgba(251,191,36,0.4)]",
     icon: "👑",
-    quote: "The quieter I am, the more trouble you are in.",
+    quote: "In the same boat, our waters just different",
     photoUrl: "/team/dewashish_lambore.jpg",
     linkedinUrl:
       "https://www.linkedin.com/in/dewashish-lambore-927048318?utm_source=share_via&utm_content=profile&utm_medium=member_android",
@@ -380,6 +380,9 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-indigo-400 text-indigo-300 bg-indigo-950/60 shadow-[0_0_8px_rgba(129,140,248,0.3)]",
     icon: "🎬",
+    quote: "“Visual Alchemist”",
+    photoUrl: "/team/gaurav_singh_verma.png",
+    linkedinUrl: "https://www.linkedin.com/in/gaurav-singh-verma-663424411",
   },
   {
     id: "photo-01",
@@ -410,7 +413,7 @@ const teamMembers: TeamMember[] = [
     badgeColor:
       "border-teal-400 text-teal-300 bg-teal-950/60 shadow-[0_0_8px_rgba(45,212,191,0.3)]",
     icon: "📷",
-    quote: "I came, I saw, I made it awkward.",
+    quote: "“I came, I saw, I made it awkward.”",
     photoUrl: "/team/srishti_raj.jpg",
   },
   {
