@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShortlistedTeamsRouteImport } from './routes/shortlisted-teams'
 import { Route as TeamRouteImport } from './routes/team'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShortlistedTeamsRoute = ShortlistedTeamsRouteImport.update({
+  id: '/shortlisted-teams',
+  path: '/shortlisted-teams',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeamRoute = TeamRouteImport.update({
@@ -25,27 +31,31 @@ const TeamRoute = TeamRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/shortlisted-teams': typeof ShortlistedTeamsRoute
   '/team': typeof TeamRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/shortlisted-teams': typeof ShortlistedTeamsRoute
   '/team': typeof TeamRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/shortlisted-teams': typeof ShortlistedTeamsRoute
   '/team': typeof TeamRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/team'
+  fullPaths: '/' | '/shortlisted-teams' | '/team'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/team'
-  id: '__root__' | '/' | '/team'
+  to: '/' | '/shortlisted-teams' | '/team'
+  id: '__root__' | '/' | '/shortlisted-teams' | '/team'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShortlistedTeamsRoute: typeof ShortlistedTeamsRoute
   TeamRoute: typeof TeamRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shortlisted-teams': {
+      id: '/shortlisted-teams'
+      path: '/shortlisted-teams'
+      fullPath: '/shortlisted-teams'
+      preLoaderRoute: typeof ShortlistedTeamsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/team': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShortlistedTeamsRoute: ShortlistedTeamsRoute,
   TeamRoute: TeamRoute,
 }
 export const routeTree = rootRouteImport

@@ -15,7 +15,7 @@ function useInView<T extends HTMLElement>() {
       ([entry]) => {
         if (entry?.isIntersecting) setSeen(true);
       },
-      { threshold: 0.25 },
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -250,7 +250,7 @@ export const SHORTLISTED_TEAMS_DATA: ShortlistedTeamSlot[] = OFFICIAL_68_SHORTLI
   }),
 );
 
-function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
+export function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
   // Dynamically calculate appropriate font size based on length of team name to ensure perfect fit
   const textLength = slot.name ? slot.name.length : 0;
   const fontSizeClass =
@@ -612,29 +612,34 @@ export function Overlay() {
       </Section>
 
       {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // 68 NEURAL SLOTS */}
-      <section id="shortlisted" className="flex min-h-screen flex-col items-center justify-center px-3 sm:px-6 py-20 text-center w-full">
-        <Panel align="center" className="!max-w-6xl w-full">
-          <div className="badge-pill mb-3">
-            <span className="text-cyan-400">◆</span> NEURAL MATRIX // 68 NODES ACTIVE
-          </div>
-          <h2 className="section-title">Shortlisted Teams</h2>
-          <p className="section-copy max-w-2xl mx-auto">
-            68 shortlisted teams selected for the Synapse 1.0 offline Grand Finale at SIT Pune.
-          </p>
+      <Section align="center" id="shortlisted">
+        <div className="badge-pill mb-3">
+          <span className="text-cyan-400">◆</span> NEURAL MATRIX // 68 NODES ACTIVE
+        </div>
+        <h2 className="section-title">Shortlisted Teams</h2>
+        <p className="section-copy max-w-2xl mx-auto">
+          68 shortlisted teams selected for the Synapse 1.0 offline Grand Finale at SIT Pune.
+        </p>
 
-          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/40 bg-amber-950/30 text-amber-300 font-hud text-xs tracking-wider shadow-[0_0_12px_rgba(251,191,36,0.15)]">
-            <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_#fbbf24]" />
-            <span>68 / 68 TEAMS SHORTLISTED</span>
-          </div>
+        <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/40 bg-amber-950/30 text-amber-300 font-hud text-xs tracking-wider shadow-[0_0_12px_rgba(251,191,36,0.15)]">
+          <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_#fbbf24]" />
+          <span>68 / 68 TEAMS SHORTLISTED</span>
+        </div>
 
-          {/* 68 TEAMS NEURAL MATRIX GRID */}
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 text-left w-full mx-auto">
-            {SHORTLISTED_TEAMS_DATA.map((slot) => (
-              <ShortlistedTeamNodeCard key={slot.id} slot={slot} />
-            ))}
-          </div>
-        </Panel>
-      </section>
+        {/* PREVIEW OF A FEW SLOTS */}
+        <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-3.5 text-left w-full mx-auto max-w-2xl">
+          {SHORTLISTED_TEAMS_DATA.slice(0, 6).map((slot) => (
+            <ShortlistedTeamNodeCard key={slot.id} slot={slot} />
+          ))}
+        </div>
+
+        <Link
+          to="/shortlisted-teams"
+          className="pixel-btn-diamond text-xs sm:text-sm mt-6 inline-flex items-center gap-2"
+        >
+          <span>VIEW ALL 68 TEAMS ↗</span>
+        </Link>
+      </Section>
 
       {/* TEAM FORMATION & VENUE: DESCENT LEVEL 04 */}
       <Section align="right" id="details">
@@ -845,7 +850,13 @@ export function Overlay() {
             { slot: "1", icon: "⚔️", label: "Overview", href: "#overview" },
             { slot: "2", icon: "🗺️", label: "Tracks", href: "#tracks" },
             { slot: "3", icon: "📜", label: "Timeline", href: "#timeline" },
-            { slot: "4", icon: "🔒", label: "Shortlisted", href: "#shortlisted" },
+            {
+              slot: "4",
+              icon: "🔒",
+              label: "Shortlisted",
+              href: "/shortlisted-teams",
+              isRouter: true,
+            },
             { slot: "5", icon: "🛡️", label: "Team Rules", href: "#details" },
             { slot: "6", icon: "🏆", label: "Prizes", href: "#prizes" },
             { slot: "7", icon: "🏛️", label: "Sponsors", href: "#sponsors" },
