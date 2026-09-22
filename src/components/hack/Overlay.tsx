@@ -210,13 +210,6 @@ function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
         )}
       </div>
 
-      {/* FOOTER BAR */}
-      <div className="mt-1 flex items-center justify-between pt-1.5 border-t border-stone-800/40 text-[9px] font-mono text-stone-500">
-        <span className="group-hover:text-cyan-400/70 transition-colors">SYNAPSE 1.0</span>
-        <span className="text-stone-600 group-hover:text-stone-400">
-          {slot.name ? "VERIFIED" : "SLOT RESERVED"}
-        </span>
-      </div>
     </div>
   );
 }
