@@ -668,27 +668,27 @@ export function Overlay() {
               {
                 name: "NASDAQ",
                 src: "/sponsors/nasdaq.png",
-                imgClass: "max-h-20 sm:max-h-14 w-auto scale-125 sm:scale-100 object-contain p-1",
+                imgClass: "max-h-24 sm:max-h-24 w-auto scale-[1.75] object-contain",
               },
               {
                 name: "PACCAR India",
                 src: "/sponsors/paccar-india.png",
-                imgClass: "max-h-14 sm:max-h-14 w-auto object-contain",
+                imgClass: "max-h-16 sm:max-h-16 w-auto object-contain px-1",
               },
               {
                 name: "Innvolution",
                 src: "/sponsors/innvolution.avif",
-                imgClass: "max-h-20 sm:max-h-14 w-auto scale-125 sm:scale-100 object-contain p-1",
+                imgClass: "max-h-24 sm:max-h-24 w-auto scale-[1.75] object-contain",
               },
             ].map((sponsor) => (
               <div
                 key={sponsor.name}
-                className="sponsor-slot sponsor-slot--revealed group flex items-center justify-center p-2 sm:p-4"
+                className="sponsor-slot sponsor-slot--revealed group flex items-center justify-center p-2 sm:p-3 overflow-hidden"
               >
                 <img
                   src={sponsor.src}
                   alt={sponsor.name}
-                  className={`${sponsor.imgClass} group-hover:scale-110 transition-transform`}
+                  className={`${sponsor.imgClass} group-hover:scale-[1.85] transition-transform duration-300`}
                 />
               </div>
             ))}
