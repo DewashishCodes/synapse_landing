@@ -26,9 +26,11 @@ function useInView<T extends HTMLElement>() {
 function Panel({
   children,
   align = "left",
+  className = "",
 }: {
   children: ReactNode;
   align?: "left" | "right" | "center";
+  className?: string;
 }) {
   const { ref, seen } = useInView<HTMLDivElement>();
   const place =
@@ -40,7 +42,7 @@ function Panel({
   return (
     <div
       ref={ref}
-      className={`panel w-full max-w-xl ${place} transition-all duration-700 ease-out ${
+      className={`panel w-full max-w-xl ${place} ${className} transition-all duration-700 ease-out ${
         seen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
       }`}
     >
@@ -610,8 +612,8 @@ export function Overlay() {
       </Section>
 
       {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // 68 NEURAL SLOTS */}
-      <section id="shortlisted" className="flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center w-full">
-        <Panel align="center">
+      <section id="shortlisted" className="flex min-h-screen flex-col items-center justify-center px-3 sm:px-6 py-20 text-center w-full">
+        <Panel align="center" className="!max-w-6xl w-full">
           <div className="badge-pill mb-3">
             <span className="text-cyan-400">◆</span> NEURAL MATRIX // 68 NODES ACTIVE
           </div>
@@ -626,7 +628,7 @@ export function Overlay() {
           </div>
 
           {/* 68 TEAMS NEURAL MATRIX GRID */}
-          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 text-left w-full max-w-5xl mx-auto">
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 text-left w-full mx-auto">
             {SHORTLISTED_TEAMS_DATA.map((slot) => (
               <ShortlistedTeamNodeCard key={slot.id} slot={slot} />
             ))}
