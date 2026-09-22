@@ -483,6 +483,14 @@
     border-color: oklch(0.42 0.05 85 / 60%);
     background: oklch(0.97 0.005 260);
     box-shadow: none;
+    min-height: 80px;
+    padding: 0.5rem;
+  }
+  @media (min-width: 640px) {
+    .sponsor-slot--revealed {
+      padding: 1rem;
+      min-height: 100px;
+    }
   }
   .sponsor-slot--revealed:hover {
     border-color: #ffd700;

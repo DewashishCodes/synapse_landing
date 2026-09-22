@@ -163,9 +163,63 @@ const stages = [
   },
 ];
 
-// Populated with { team: "Team Name", members: "College / track (optional)" } once
-// results are announced on 21 Sep 2026. Empty array renders the "not revealed yet" state.
-const shortlistedTeams: { team: string; note?: string }[] = [];
+export interface ShortlistedTeamSlot {
+  id: number;
+  slotNumber: string;
+  name: string; // Intentionally empty - ready for real team names to be inserted later
+}
+
+// Exactly 50 team slots (01 to 50) with empty name fields
+export const SHORTLISTED_TEAMS_DATA: ShortlistedTeamSlot[] = Array.from(
+  { length: 50 },
+  (_, i) => ({
+    id: i + 1,
+    slotNumber: String(i + 1).padStart(2, "0"),
+    name: "",
+  }),
+);
+
+function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
+  return (
+    <div className="biome-card group relative p-3 flex flex-col justify-between border border-stone-800/90 bg-stone-950/80 hover:border-cyan-400/80 hover:bg-stone-900/60 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(0,245,212,0.15)] overflow-hidden">
+      {/* Corner LED Indicator */}
+      <div className="absolute top-2 right-2 flex items-center gap-1">
+        <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 group-hover:bg-cyan-300 group-hover:shadow-[0_0_6px_#00f5d4] transition-all" />
+      </div>
+
+      {/* SLOT NUMBER */}
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <span className="font-hud text-[10px] font-bold text-cyan-400/80 group-hover:text-cyan-300 tracking-wider">
+          SLOT #{slot.slotNumber}
+        </span>
+        <span className="text-[8px] font-mono text-stone-500 group-hover:text-cyan-400/60 transition-colors">
+          [NODE {slot.slotNumber}]
+        </span>
+      </div>
+
+      {/* TEAM NAME AREA (Intentionally blank placeholder frame) */}
+      <div className="my-1 flex min-h-[2.4rem] items-center justify-center rounded-sm bg-stone-900/40 border border-stone-800/40 px-2 group-hover:border-cyan-500/30 transition-colors">
+        {slot.name ? (
+          <span className="font-hud text-xs sm:text-sm font-bold text-cyan-100 group-hover:text-cyan-300 truncate">
+            {slot.name}
+          </span>
+        ) : (
+          <span className="font-mono text-[10px] tracking-widest text-stone-600/60 group-hover:text-cyan-400/40 transition-colors select-none">
+            [ · ]
+          </span>
+        )}
+      </div>
+
+      {/* FOOTER BAR */}
+      <div className="mt-1 flex items-center justify-between pt-1.5 border-t border-stone-800/40 text-[9px] font-mono text-stone-500">
+        <span className="group-hover:text-cyan-400/70 transition-colors">SYNAPSE 1.0</span>
+        <span className="text-stone-600 group-hover:text-stone-400">
+          {slot.name ? "VERIFIED" : "SLOT RESERVED"}
+        </span>
+      </div>
+    </div>
+  );
+}
 
 const teamFormationRules = [
   "Team size: 2–4 members",
@@ -481,44 +535,30 @@ export function Overlay() {
         </div>
       </Section>
 
-      {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // RESULTS QUEST LOG */}
-      <Section align="right" id="shortlisted">
-        <div className="badge-pill mb-3">
-          <span className="text-cyan-400">◆</span> RESULTS // REVEALED 21 SEP
-        </div>
-        <h2 className="section-title">Shortlisted Teams</h2>
-        <p className="section-copy">
-          Teams shortlisted for the offline Grand Finale at SIT Pune will be announced here on 21st
-          September 2026.
-        </p>
-
-        {shortlistedTeams.length === 0 ? (
-          <div className="mt-6 quest-row flex flex-col items-center gap-2 py-8 px-4 text-center">
-            <span className="text-2xl">🔒</span>
-            <span className="text-sm font-hud text-foreground/80 uppercase tracking-wider">
-              Results Locked
-            </span>
-            <p className="text-xs text-foreground/60 font-sans max-w-sm">
-              Submit your Concept &amp; PPT before 20th September to be in the running. Shortlisted
-              teams will unlock right here once results drop on 21st September 2026.
-            </p>
+      {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // 50 NEURAL SLOTS */}
+      <section id="shortlisted" className="flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center w-full">
+        <Panel align="center">
+          <div className="badge-pill mb-3">
+            <span className="text-cyan-400">◆</span> NEURAL MATRIX // 50 NODES ACTIVE
           </div>
-        ) : (
-          <div className="mt-6 grid gap-2 sm:grid-cols-2">
-            {shortlistedTeams.map((t) => (
-              <div key={t.team} className="quest-row flex items-center gap-3 py-2.5 px-3.5">
-                <span className="text-emerald-400 text-xs shrink-0">✦</span>
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-hud text-foreground/90">{t.team}</span>
-                  {t.note && (
-                    <span className="text-[10px] text-foreground/50 font-sans">{t.note}</span>
-                  )}
-                </div>
-              </div>
+          <h2 className="section-title">Shortlisted Teams</h2>
+          <p className="section-copy max-w-2xl mx-auto">
+            50 shortlisted team slots for the Synapse 1.0 offline Grand Finale at SIT Pune. Official team roster decrypting on 21st September.
+          </p>
+
+          <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/40 bg-amber-950/30 text-amber-300 font-hud text-xs tracking-wider shadow-[0_0_12px_rgba(251,191,36,0.15)]">
+            <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_#fbbf24]" />
+            <span>50 / 50 SLOTS RESERVED</span>
+          </div>
+
+          {/* 50 TEAMS NEURAL MATRIX GRID */}
+          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 text-left w-full max-w-5xl mx-auto">
+            {SHORTLISTED_TEAMS_DATA.map((slot) => (
+              <ShortlistedTeamNodeCard key={slot.id} slot={slot} />
             ))}
           </div>
-        )}
-      </Section>
+        </Panel>
+      </section>
 
       {/* TEAM FORMATION & VENUE: DESCENT LEVEL 04 */}
       <Section align="right" id="details">
@@ -632,18 +672,30 @@ export function Overlay() {
 
           <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {[
-              { name: "NASDAQ", src: "/sponsors/nasdaq.png" },
-              { name: "PACCAR India", src: "/sponsors/paccar-india.png" },
-              { name: "Innvolution", src: "/sponsors/innvolution.avif" },
+              {
+                name: "NASDAQ",
+                src: "/sponsors/nasdaq.png",
+                imgClass: "max-h-20 sm:max-h-14 w-auto scale-125 sm:scale-100 object-contain p-1",
+              },
+              {
+                name: "PACCAR India",
+                src: "/sponsors/paccar-india.png",
+                imgClass: "max-h-14 sm:max-h-14 w-auto object-contain",
+              },
+              {
+                name: "Innvolution",
+                src: "/sponsors/innvolution.avif",
+                imgClass: "max-h-20 sm:max-h-14 w-auto scale-125 sm:scale-100 object-contain p-1",
+              },
             ].map((sponsor) => (
               <div
                 key={sponsor.name}
-                className="sponsor-slot sponsor-slot--revealed group flex items-center justify-center p-4"
+                className="sponsor-slot sponsor-slot--revealed group flex items-center justify-center p-2 sm:p-4"
               >
                 <img
                   src={sponsor.src}
                   alt={sponsor.name}
-                  className="max-h-14 w-auto object-contain group-hover:scale-105 transition-transform"
+                  className={`${sponsor.imgClass} group-hover:scale-110 transition-transform`}
                 />
               </div>
             ))}
