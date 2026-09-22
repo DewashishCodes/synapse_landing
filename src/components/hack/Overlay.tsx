@@ -249,16 +249,27 @@ export const SHORTLISTED_TEAMS_DATA: ShortlistedTeamSlot[] = OFFICIAL_68_SHORTLI
 );
 
 function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
+  // Dynamically calculate appropriate font size based on length of team name to ensure perfect fit
+  const textLength = slot.name ? slot.name.length : 0;
+  const fontSizeClass =
+    textLength > 20
+      ? "text-[9px] sm:text-[10px]"
+      : textLength > 14
+        ? "text-[10px] sm:text-[11px]"
+        : textLength > 10
+          ? "text-[11px] sm:text-xs"
+          : "text-xs sm:text-sm";
+
   return (
-    <div className="biome-card group relative p-3 flex flex-col justify-between border border-stone-800/90 bg-stone-950/80 hover:border-cyan-400/80 hover:bg-stone-900/70 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(0,245,212,0.15)] overflow-hidden">
+    <div className="biome-card group relative p-2.5 flex flex-col justify-between border border-stone-800/90 bg-stone-950/80 hover:border-cyan-400/80 hover:bg-stone-900/70 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(0,245,212,0.15)] overflow-hidden">
       {/* Corner LED Indicator */}
       <div className="absolute top-2 right-2 flex items-center gap-1">
         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 group-hover:bg-cyan-300 group-hover:shadow-[0_0_6px_#00f5d4] transition-all" />
       </div>
 
       {/* SLOT NUMBER */}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="font-hud text-[10px] font-bold text-cyan-400/90 group-hover:text-cyan-300 tracking-wider">
+      <div className="flex items-center justify-between gap-1 mb-2 pr-3">
+        <span className="font-hud text-[9px] sm:text-[10px] font-bold text-cyan-400/90 group-hover:text-cyan-300 tracking-wider">
           SLOT #{slot.slotNumber}
         </span>
         <span className="text-[8px] font-mono text-stone-500 group-hover:text-cyan-400/60 transition-colors">
@@ -267,9 +278,11 @@ function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
       </div>
 
       {/* TEAM NAME AREA */}
-      <div className="my-1 flex min-h-[3rem] items-center justify-center rounded-sm bg-stone-900/50 border border-stone-800/60 px-2.5 py-1.5 group-hover:border-cyan-500/40 transition-colors text-center">
+      <div className="my-0.5 flex min-h-[3.25rem] w-full items-center justify-center rounded-sm bg-stone-900/60 border border-stone-800/60 px-2 py-1.5 group-hover:border-cyan-500/40 transition-colors text-center overflow-hidden">
         {slot.name ? (
-          <span className="font-hud text-xs sm:text-xs md:text-sm font-bold text-cyan-100 group-hover:text-cyan-300 leading-snug break-words tracking-wide text-center">
+          <span
+            className={`font-hud ${fontSizeClass} font-bold text-cyan-100 group-hover:text-cyan-300 leading-snug break-words [overflow-wrap:anywhere] tracking-tight text-center w-full max-w-full`}
+          >
             {slot.name}
           </span>
         ) : (
