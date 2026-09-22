@@ -166,22 +166,91 @@ const stages = [
 export interface ShortlistedTeamSlot {
   id: number;
   slotNumber: string;
-  name: string; // Intentionally empty - ready for real team names to be inserted later
+  name: string;
 }
 
-// Exactly 50 team slots (01 to 50) with empty name fields
-export const SHORTLISTED_TEAMS_DATA: ShortlistedTeamSlot[] = Array.from(
-  { length: 50 },
-  (_, i) => ({
+const OFFICIAL_68_SHORTLISTED_TEAMS = [
+  "404 : Team Not Selected",
+  "404 Rebels",
+  "70Gram",
+  "AERONOX",
+  "AI Mavericks",
+  "ai_axioms",
+  "Airavat",
+  "ANKOR",
+  "APEX CODERS",
+  "Ashvatthama",
+  "boolean-IV",
+  "bumblebee",
+  "Bytebelles",
+  "CAISHEN",
+  "Calm & Chaos",
+  "CardioX",
+  "CHAOTIC4",
+  "Civora",
+  "CodeCraft",
+  "CodeSlayers",
+  "Ctrl+Create",
+  "Curious ones",
+  "de-bugged",
+  "Dr. Doom",
+  "DriveMind",
+  "Dysmorphia",
+  "ERROR 404",
+  "GeekHacks",
+  "Gradient Boosters",
+  "Guardians of the Git",
+  "Hack2Win",
+  "HackBots",
+  "HackNxt",
+  "JEE-Rankers",
+  "JSparrow",
+  "Knull Pointers",
+  "Larp",
+  "LogicLabs",
+  "Maithilvishwamitra",
+  "MANHATTAN 45",
+  "Meow Cats",
+  "Neural Ninjas",
+  "Newbiezz",
+  "NEXORA",
+  "NO MERCY",
+  "Null Pointer",
+  "OOPs! All Bugs",
+  "Order Of The Phoenix",
+  "PARALLAX (Team 1)",
+  "PARALLAX (Team 2)",
+  "Policia",
+  "QuadraX",
+  "Quadruple A",
+  "Quill n Code",
+  "RAP",
+  "Sonnet",
+  "Syno Spark",
+  "Team Corona",
+  "Team Rocket",
+  "Team Vortex",
+  "TerminalX",
+  "The Dexters",
+  "The Last Semicolon",
+  "Toofani",
+  "Unbeatable",
+  "Vector Minds",
+  "Window IV",
+  "Wudang Sect",
+];
+
+export const SHORTLISTED_TEAMS_DATA: ShortlistedTeamSlot[] = OFFICIAL_68_SHORTLISTED_TEAMS.map(
+  (name, i) => ({
     id: i + 1,
     slotNumber: String(i + 1).padStart(2, "0"),
-    name: "",
+    name,
   }),
 );
 
 function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
   return (
-    <div className="biome-card group relative p-3 flex flex-col justify-between border border-stone-800/90 bg-stone-950/80 hover:border-cyan-400/80 hover:bg-stone-900/60 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(0,245,212,0.15)] overflow-hidden">
+    <div className="biome-card group relative p-3 flex flex-col justify-between border border-stone-800/90 bg-stone-950/80 hover:border-cyan-400/80 hover:bg-stone-900/70 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_0_15px_rgba(0,245,212,0.15)] overflow-hidden">
       {/* Corner LED Indicator */}
       <div className="absolute top-2 right-2 flex items-center gap-1">
         <span className="w-1.5 h-1.5 rounded-full bg-cyan-500/40 group-hover:bg-cyan-300 group-hover:shadow-[0_0_6px_#00f5d4] transition-all" />
@@ -189,7 +258,7 @@ function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
 
       {/* SLOT NUMBER */}
       <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="font-hud text-[10px] font-bold text-cyan-400/80 group-hover:text-cyan-300 tracking-wider">
+        <span className="font-hud text-[10px] font-bold text-cyan-400/90 group-hover:text-cyan-300 tracking-wider">
           SLOT #{slot.slotNumber}
         </span>
         <span className="text-[8px] font-mono text-stone-500 group-hover:text-cyan-400/60 transition-colors">
@@ -197,10 +266,10 @@ function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
         </span>
       </div>
 
-      {/* TEAM NAME AREA (Intentionally blank placeholder frame) */}
-      <div className="my-1 flex min-h-[2.4rem] items-center justify-center rounded-sm bg-stone-900/40 border border-stone-800/40 px-2 group-hover:border-cyan-500/30 transition-colors">
+      {/* TEAM NAME AREA */}
+      <div className="my-1 flex min-h-[3rem] items-center justify-center rounded-sm bg-stone-900/50 border border-stone-800/60 px-2.5 py-1.5 group-hover:border-cyan-500/40 transition-colors text-center">
         {slot.name ? (
-          <span className="font-hud text-xs sm:text-sm font-bold text-cyan-100 group-hover:text-cyan-300 truncate">
+          <span className="font-hud text-xs sm:text-xs md:text-sm font-bold text-cyan-100 group-hover:text-cyan-300 leading-snug break-words tracking-wide text-center">
             {slot.name}
           </span>
         ) : (
@@ -209,7 +278,6 @@ function ShortlistedTeamNodeCard({ slot }: { slot: ShortlistedTeamSlot }) {
           </span>
         )}
       </div>
-
     </div>
   );
 }
@@ -528,23 +596,23 @@ export function Overlay() {
         </div>
       </Section>
 
-      {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // 50 NEURAL SLOTS */}
+      {/* SHORTLISTED TEAMS: DESCENT LEVEL 03.5 // 68 NEURAL SLOTS */}
       <section id="shortlisted" className="flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center w-full">
         <Panel align="center">
           <div className="badge-pill mb-3">
-            <span className="text-cyan-400">◆</span> NEURAL MATRIX // 50 NODES ACTIVE
+            <span className="text-cyan-400">◆</span> NEURAL MATRIX // 68 NODES ACTIVE
           </div>
           <h2 className="section-title">Shortlisted Teams</h2>
           <p className="section-copy max-w-2xl mx-auto">
-            50 shortlisted team slots for the Synapse 1.0 offline Grand Finale at SIT Pune. Official team roster decrypting on 21st September.
+            68 shortlisted teams selected for the Synapse 1.0 offline Grand Finale at SIT Pune.
           </p>
 
           <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/40 bg-amber-950/30 text-amber-300 font-hud text-xs tracking-wider shadow-[0_0_12px_rgba(251,191,36,0.15)]">
             <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_6px_#fbbf24]" />
-            <span>50 / 50 SLOTS RESERVED</span>
+            <span>68 / 68 TEAMS SHORTLISTED</span>
           </div>
 
-          {/* 50 TEAMS NEURAL MATRIX GRID */}
+          {/* 68 TEAMS NEURAL MATRIX GRID */}
           <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 text-left w-full max-w-5xl mx-auto">
             {SHORTLISTED_TEAMS_DATA.map((slot) => (
               <ShortlistedTeamNodeCard key={slot.id} slot={slot} />
@@ -668,7 +736,7 @@ export function Overlay() {
               {
                 name: "NASDAQ",
                 src: "/sponsors/nasdaq.png",
-                imgClass: "max-h-24 sm:max-h-24 w-auto scale-[1.75] object-contain",
+                imgClass: "max-h-20 sm:max-h-20 w-auto scale-125 object-contain",
               },
               {
                 name: "PACCAR India",
@@ -678,7 +746,7 @@ export function Overlay() {
               {
                 name: "Innvolution",
                 src: "/sponsors/innvolution.avif",
-                imgClass: "max-h-24 sm:max-h-24 w-auto scale-[1.75] object-contain",
+                imgClass: "max-h-20 sm:max-h-20 w-auto scale-125 object-contain",
               },
             ].map((sponsor) => (
               <div
